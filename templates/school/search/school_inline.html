@@ -1,0 +1,19 @@
+<ul id="inline-school">
+<div id="{{school.id}}">
+    <table>
+        <col>
+            <!-- <img alt="" src="{{STATIC_URL}}images/daycare1.png" style="width:50px;height:50px;float:left; padding:5px"> --> 
+    <div style="font-weight:bold;"><a href="{% url school_detail school.id %}">{{ school.name }}</a></div>
+    <div class="">{{ school.school_type }}</div>
+    <div class="">{{ school.grade_range }}</div>
+    <div class="">{{ school.addr1 }} {{ school.city }} {{ school.state }} {{ school.zip }}</div>
+    <div class="">{{ school.distance }} miles away</div>
+        </col>
+        <col>        <span style="float:right;">
+        <button id="{{school.id}}btn" onClick="tagSchool({{ school.id }},'{% if school.tagged %}remove{% else %}add_update{% endif %}');">{%if school.tagged %}Remove Bookmark{% else %} Bookmark {% endif %}</button>
+    </span>
+        </col>
+    </table>
+
+   </div>
+</ul>

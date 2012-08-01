@@ -1,0 +1,41 @@
+{% load i18n %}
+
+<!--header begin-->
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="{% url home %}" title="{% trans "Home" %}">KidAdmit</a>
+            <ul class="nav pull-right">
+                {% if user.is_authenticated %}
+                    <form class="navbar-form pull-left">
+                        <input id="navbar-search" type="text" class="span3" placeholder="{% trans "Search..." %}">
+                    </form>
+                    <li class="dropdown">
+                        <a id="user-icon" href="#"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown">
+                            <img src="http://placehold.it/50x50" alt="">
+                            <b class="caret center_caret"></b>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="#">{% trans "Profile" %}</a></li>
+                            <li><a href="#">{% trans "Settings" %}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{% url auth_logout %}">{% trans "Logout" %}</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li>
+                        <a class="signin-btn" data-toggle="modal" href="#login-modal" title="{% trans "Sign in" %}"></a>
+                    </li>
+                    <li>
+                        <a class="signup-btn" data-toggle="modal" href="#signup-modal"
+                           title="{% trans "Sign up" %}"></a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+<!--header end-->

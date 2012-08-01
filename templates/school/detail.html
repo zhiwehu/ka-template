@@ -1,0 +1,46 @@
+{% extends 'site_base.html' %}
+{% block title %} School Info {% endblock title %}
+
+
+{% block extrahead %}
+
+<style type="text/css">
+.school_header {
+color: black;
+background-color: #C0C0C0;
+}
+#school_name{
+font:20px arial,sans-serif;
+padding-top:5px; 
+}
+
+.school_pic {
+width:80px; 
+height: 80px;
+float:left;
+padding:7px 7px 7px 7px;
+
+z-index:-1;
+}
+.school_link a {color:blue;}
+</style>
+{% endblock extrahead %}
+
+{% block content %}
+<div class="school_header">
+<img class="school_pic" src="" >
+<div style="margin:7px;">
+<div id="school_name">{{ school.name }}</div>
+<div id="">{{ school.address1 }}{% if school.address2 %}, {{school.address2 }}{% endif %}</div> 
+<div id="">{{ school.city }}, {{ school.state }} {{ school.zipcode }}</div>
+{% load school_tags %}
+<div id="">{{ school.phone_number|format_phone }}</div>
+<div class="school_link">{% if school.website %}<a href="{{ school.website }}" target="_blank">{{ school.website }}</a> {% endif %}</div>
+<div>
+<a href="http://www.google.com/calendar/ical/kidadmit.com_mraupvkbdnnnf5o2uffahg181o%40group.calendar.google.com/public/basic.ics">ICS</a>
+<a href="http://www.google.com/calendar/render?cid=http%3A%2F%2Fwww.google.com%2Fcalendar%2Ffeeds%2Fkidadmit.com_mraupvkbdnnnf5o2uffahg181o%2540group.calendar.google.com%2Fpublic%2Fbasic" target="_blank"><img src="//www.google.com/calendar/images/ext/gc_button1.gif" border=0></a>
+</div>
+</div>
+</div>
+
+{% endblock content %}

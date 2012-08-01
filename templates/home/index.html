@@ -1,0 +1,64 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <!--search begin-->
+    <div class="highlight-row">
+        <div class="container">
+            <form class="navbar-search container" action="#" method="post" name="nearbySearch">
+                <input name="address" id="id_address" class="span4" placeholder="{% trans "What's your zip code or address?" %}"
+                       type="text">
+                <input class="btn btn-success btn-large" value="Search" type="submit">
+            </form>
+        </div>
+    </div>
+    <!--search end-->
+    <div class="container content">
+        <div class="row">
+            <div id="point3" class="span8">
+                <h4>You deserve more time with your kids</h4>
+                <dl>
+                    <dt>
+                        <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/50x50" alt="">
+                        </a>
+                    </dt>
+                    <dd>
+                        <h5>Point 1</h5>
+                        <p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue.
+                        </p>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/50x50" alt="">
+                        </a>
+                    </dt>
+                    <dd>
+                        <h5>Point 2</h5>
+                        <p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue.
+                        </p>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <a href="#" class="thumbnail">
+                            <img src="http://placehold.it/50x50" alt="">
+                        </a>
+                    </dt>
+                    <dd>
+                        <h5>Point 3</h5>
+                        <p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue.
+                        </p>
+                    </dd>
+                </dl>
+            </div>
+            <div class="span4">
+                <img src="http://placehold.it/300x270"/>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

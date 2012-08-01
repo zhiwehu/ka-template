@@ -1,0 +1,155 @@
+{% extends 'site_base.html' %}
+{% block title %} School Search {% endblock title %}
+
+{% block content %}
+
+<script>
+function initialize() {
+	 var myLatLng = new google.maps.LatLng({{ address_geocode.lat }}, {{ address_geocode.lng }});
+	 var mapOptions = {
+	    zoom: 14,
+	    center: myLatLng,
+	    mapTypeId: google.maps.MapTypeId.ROADMAP
+	  }
+	  var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+	  var addrMarker = new google.maps.Marker({
+	      position: myLatLng,
+	      map: map,
+	      title: 'Home',
+	      icon: 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png',
+	      zIndex: 1,
+	  });
+	  var infoWindow = new google.maps.InfoWindow({
+	          content: 'Home'
+	  });
+      google.maps.event.addListener(addrMarker, 'click', function(event) {
+               map.panTo(event.latLng);
+               infoWindow.open(map, this);
+           }
+      );
+	  
+	  setMarkers(map, school_markers);
+	  infoWindow = new google.maps.InfoWindow();
+	  for (var i = 0, marker; marker = markers[i]; i++) {
+	    google.maps.event.addListener(marker, 'click', function(e, i) {
+	    	infoWindow.setContent(this.content);
+            map.panTo(this.position);
+	    	infoWindow.open(map, this);
+	    });
+	  }
+	  
+	}
+var school_markers = [
+  {% for school in school_list %}
+   ['{{ school.name|escape }}', {{school.lat|escape}}, {{school.lng|escape}}, '<div id="marker-content"><div class="school-name">{{school.name|escape}}</div><div class="school-info"><p>{{ school.school_type|escape }}</p></div></div>'],
+  {% endfor %}
+ ];
+var markers = [];
+var infoWindows =[];
+var infoWindow;
+
+function setMarkers(map, locations) {
+	  for (var i = 0; i < locations.length; i++) {
+	    var school = locations[i];
+	    var myLatLng = new google.maps.LatLng(school[1], school[2]);
+
+	    var marker = new google.maps.Marker({
+	        position: myLatLng,
+	        map: map,
+	        title: school[0],
+	        animation : google.maps.Animation.DROP,
+            infoWindowIndex : i,
+            zIndex: 0,
+            draggable: false,
+            content: school[3],
+	    });
+        markers.push(marker);
+	  }
+}
+	function loadScript() {
+	  var script = document.createElement("script");
+	  script.type = "text/javascript";
+	  script.src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyAA74pnUb331_EGc6POkPg-mqfCCRivTC8&sensor=false&callback=initialize";
+	  document.body.appendChild(script);
+	}
+	
+function openMarker(i){
+   google.maps.event.trigger(markers[i],'click');
+   var e = window.event;
+   e.returnValue = false;
+ };
+
+window.onload = loadScript;
+
+function tagSchool(id,action){
+	$.ajax({
+		type:"POST",
+		url: "{% url tag_school %}",
+		data: {
+			csrfmiddlewaretoken: '{{ csrf_token }}',
+			school:id,
+			action:action,
+		},
+		success: function(data) {
+			var btnid = id + action
+			if(action=='remove') {
+				$('#')
+			}
+		},
+		error: function(error) {
+			alert (error);
+		}
+	});
+	return false;
+}
+</script>
+<style type="text/css">
+<!--
+#map_canvas { height: 350px; width: 100% ;  }
+.endless_container { display: block; margin-left: 300px;}
+#marker-content .school-name {color:#258CCE; font-weight: bold;}
+#marker-content .school-info {color:##000000;}
+.school-list { width: 70%; margin-left: 30px;}
+.total-results {
+font-weight: bold; 
+border:1px solid #EBE9E4;
+background-color: #F1F1EC;
+padding:5px;
+border-radius:2px;
+}
+.school-entry {margin-left: 30px; padding: 5px;  }
+.school-img-col {width: 40px; margin-right: 10px; }
+.school-info-1 {width: 500px; }
+.school-info-2 {width: 100px; right: 0px;}
+-->
+</style>
+<script src="{{STATIC_URL}}endless_pagination/js/endless.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{STATIC_URL}}endless_pagination/js/endless_on_scroll.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    var endless_on_scroll_margin = 10;
+</script>
+<h3> Search Results</h3>
+{% if code == 'success' %}
+	{% if total_results > 0 %}
+	<div id="map_canvas"></div><br/>
+ <!--        
+        <div style="float:right; background-color:silver;">
+            <form name="search-form" action="{% url school_search %}" method="POST">{% csrf_token %}
+                {{ search_form.as_p }}
+                <input type="submit" class="btn btn-primary" value="Search"/>
+            </form>
+        </div>
+ -->
+		<div class="school-list">
+		<p class="total-results">{{ total_results }} Schools Nearby </p>
+		</div>
+		{% include page_template %}
+    {% else %}
+        <div> Sorry, we were unable to find schools matching that criteria in your neighborhood.</div>
+    {% endif %}
+{% else %}
+    <div> Sorry, we are having technical problems. Please stop by later.</div>
+{% endif %}
+
+{% endblock content %}

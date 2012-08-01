@@ -1,0 +1,72 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row">
+        <div class="section section-large offset6">
+            <div class="section-header">
+                <h3>Sign in</h3>
+            </div>
+            <div class="section-body">
+                <form id="login-form-no-modal" method="post" action="{% url auth_ajax_login %}">
+                    {% csrf_token %}
+                    <div id="loginMessage-no-modal"></div>
+                    <fieldset>
+                        <label for="id_email_signin-no-modal">Email:</label>
+                        <input type="text" id="id_email_signin-no-modal" name="email" class="input-xlarge required email">
+                        <label for="id_password_signin-no-modal">Password:</label>
+                        <input type="password" id="id_password_signin-no-modal" name="password"
+                               class="input-xlarge required">
+                        <input type="hidden" name="next" value=""/>
+                    </fieldset>
+                    <input class="btn btn-large btn-success" type="submit" value="Login"/>
+
+                    <a class="btn btn-large signup-facebook"
+                       onclick="$('#facebook-connect-form').submit(); return false;" href="#">
+                        <i class="icon-facebook"></i> {% trans "Log in with Facebook" %}
+                    </a>
+                </form>
+            </div>
+            <div class="section-footer">
+                <a href="#">
+                    <span>{% trans "Forgot password?" %}</span>
+                </a>
+                ·
+                <a id="signup-on-login" href="#" title="{% trans "Sign up" %}">
+                    <span>{% trans "Sign up to KidAdmit" %}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $("#login-form-no-modal").validate();
+
+            $("#login-form-no-modal").submit(function () {
+                var form = $("#login-form-no-modal");
+                $("#loginMessage-no-modal").empty();
+                if (form.valid()) {
+                    $.ajax({
+                        url:"{% url auth_ajax_login %}",
+                        type:"POST",
+                        data:$("#login-form-no-modal").serialize(),
+                        success:function (url) {
+                            window.location = url;
+                        },
+                        error:function (jqXHR) {
+                            if (jqXHR.status == 403) {
+                                $("#loginMessage-no-modal").text(jqXHR.responseText);
+                            } else {
+                                $("#loginMessage-no-modal").text("Error Contacting Server");
+                            }
+                        }
+                    });
+                }
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

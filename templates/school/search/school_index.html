@@ -1,30 +1,21 @@
  {% load endless %}
  {% lazy_paginate school_list %}
 {% for school in school_list %}
-	<ul class="school-list">
-		<table>
-			<col class="school-img-col" />
-			<col class="school-info-1" />
-			<col class="school-info-2" />
-			<tr>
-				<td><a href="javascript:openMarker({{forloop.counter0}})"><img src="{{STATIC_URL}}images/home1.png" /></a></td>
-				<td>
-					<div style="font-weight: bold;">
-						<a href="{% url school_detail school.id %}">{{ school.name }}</a>
-					</div>
-					<div class="">{{ school.school_type }}</div>
-					<div class="">{{ school.grade_range }}</div>
-				</td>
-				<td>
-					<button id="{{school.id}}btn"
-						class="btn btn-primary {% if school.tagged %} btn-saved {% endif %}"
-						onClick="tagSchool({{ school.id }},'{% if school.tagged %}remove{% else %}add_update{% endif %}');">{%if school.tagged %}Saved{% else %} Save School {% endif %}</button>
-					<div>{{ school.distance }} miles away</div>
-				</td>
-			</tr>
-		</table>
-	   <hr />
-	</ul>
-	
-	{% endfor %} 
-	{% show_more '<input type="submit" class="btn btn-primary" value="Get more" />' '<input type="submit" class="btn btn-primary" value="Loading ..." />' %}
+    <ul class="unstyled">
+        <div class="row">
+            <div class="span1"><a href="javascript:openMarker({{forloop.counter0}})"><img src="{{STATIC_URL}}images/home1.png" /></a></div>
+            <div class="span5"><strong><a href="{% url school_detail school.id school.slug %}">{{ school.name }}</a></strong>
+                    <div class="">{{ school.school_type }}</div>
+                    <!-- <div class="">{{ school.schoolapplicationinfo }}</div> -->
+            </div>
+            <div class="span2 rjustify">
+                <input type="submit" id="{{school.id}}btn" class="span2 btn btn-primary {% if school.tagged %} btn-saved {% endif %}"
+                        onClick="toggleSaveSchool({{ school.id }});" value="{%if school.tagged %}Saved{% else %} Save School {% endif %}">
+                <div>{{ school.distance }} miles away</div>
+            </div>
+        </div>
+       <hr>
+    </ul>
+    
+{% endfor %} 
+{% show_more '<input type="submit" class="span2 btn btn-info btn-small" value="Get more" />' '<input type="submit" class="span2 btn btn-small btn-info" value="Loading ..." />' %}

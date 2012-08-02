@@ -5,33 +5,43 @@
     <div class="navbar-inner">
         <div class="container">
             <a class="brand" href="{% url home %}" title="{% trans "Home" %}">KidAdmit</a>
+        {% if user.is_authenticated %}
+            <ul class="nav">
+                <li><a href="#">My Schools</a> </li>
+                <li class="active"><a href="#">Calendar</a></li>
+            </ul>
+        {% else %}
+            <ul class="nav">
+                <li><a class="need_login" href="{% url test_login %}">Test login</a></li>
+            </ul>
+        {% endif %}
             <ul class="nav pull-right">
                 {% if user.is_authenticated %}
                     <form class="navbar-form pull-left">
                         <input id="navbar-search" type="text" class="span3" placeholder="{% trans "Search..." %}">
                     </form>
-                    <li class="dropdown">
-                        <a id="user-icon" href="#"
-                           class="dropdown-toggle"
-                           data-toggle="dropdown">
-                            <img src="http://placehold.it/50x50" alt="">
-                            <b class="caret center_caret"></b>
-                        </a>
 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img class="profile" src="{{ STATIC_URL }}img/profile.jpg" />
+                        <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">{% trans "Profile" %}</a></li>
                             <li><a href="#">{% trans "Settings" %}</a></li>
                             <li class="divider"></li>
-                            <li><a href="{% url auth_logout %}">{% trans "Logout" %}</a></li>
+                            <li><a href="{% url auth_logout %}">{% trans "Sign out" %}</a></li>
                         </ul>
                     </li>
                 {% else %}
                     <li>
-                        <a class="signin-btn" data-toggle="modal" href="#login-modal" title="{% trans "Sign in" %}"></a>
+                        <a data-toggle="modal" href="#signin-modal" class="btn btn-large signin">
+                            {% trans "Sign in" %}
+                        </a>
                     </li>
-                    <li>
-                        <a class="signup-btn" data-toggle="modal" href="#signup-modal"
-                           title="{% trans "Sign up" %}"></a>
+                    <li id="signup" class="offset0">
+                        <a data-toggle="modal" href="#signup-modal" class="btn btn-large btn-signup">
+                        {% trans "Sign up" %}
+                        </a>
                     </li>
                 {% endif %}
             </ul>

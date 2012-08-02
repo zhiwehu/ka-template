@@ -1,46 +1,154 @@
 {% extends 'site_base.html' %}
-{% block title %} School Info {% endblock title %}
-
-
-{% block extrahead %}
-
+{% block title %} {{school.name|escape}} {% endblock title %}
+{% load humanize %}
+{% block extra_css %}
 <style type="text/css">
 .school_header {
-color: black;
-background-color: #C0C0C0;
+  padding: 5px 5px 5px 5px;
+  color: black;
+  background-color: #F1F2ED;
+ /* border-radius */
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  /* box-shadow */
+  -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+  -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+  box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
 }
-#school_name{
-font:20px arial,sans-serif;
-padding-top:5px; 
-}
-
+.rjustify { text-align: right;}
 .school_pic {
 width:80px; 
 height: 80px;
 float:left;
 padding:7px 7px 7px 7px;
-
 z-index:-1;
 }
 .school_link a {color:blue;}
+#info {
+  width: 60%;
+  text-align: left;
+}
+
+#info span {font-weight: bold;}
 </style>
-{% endblock extrahead %}
+{% endblock extra_css %}
+
 
 {% block content %}
-<div class="school_header">
-<img class="school_pic" src="" >
-<div style="margin:7px;">
-<div id="school_name">{{ school.name }}</div>
-<div id="">{{ school.address1 }}{% if school.address2 %}, {{school.address2 }}{% endif %}</div> 
-<div id="">{{ school.city }}, {{ school.state }} {{ school.zipcode }}</div>
-{% load school_tags %}
-<div id="">{{ school.phone_number|format_phone }}</div>
-<div class="school_link">{% if school.website %}<a href="{{ school.website }}" target="_blank">{{ school.website }}</a> {% endif %}</div>
-<div>
-<a href="http://www.google.com/calendar/ical/kidadmit.com_mraupvkbdnnnf5o2uffahg181o%40group.calendar.google.com/public/basic.ics">ICS</a>
-<a href="http://www.google.com/calendar/render?cid=http%3A%2F%2Fwww.google.com%2Fcalendar%2Ffeeds%2Fkidadmit.com_mraupvkbdnnnf5o2uffahg181o%2540group.calendar.google.com%2Fpublic%2Fbasic" target="_blank"><img src="//www.google.com/calendar/images/ext/gc_button1.gif" border=0></a>
+<script type="text/javascript" charset="UTF8">
+
+function toogleSaveSchool(id){
+	var btnId="#"+id+"btn";
+	var savedClass = "btn-saved"; 
+	var action = "save";
+	if ($(btnId).attr("class").indexOf(savedClass) != -1) {
+		action = "remove";
+	}
+    $.ajax({
+        type:"POST",
+        url: "{% url tag_school %}",
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            school:id,
+            action:action,
+        },
+        success: function(data) {
+            if(action=='remove') {
+                $(btnId).removeClass(savedClass); 
+                $(btnId).val(' Save School ');
+            } else {
+            	$(btnId).addClass(savedClass);
+            	$(btnId).val(' Saved ');
+            }
+        },
+        error: function(error) {
+            alert (error);
+        }
+    });
+    return false;
+}
+</script>
+{% load common_tags %}
+<br/>
+<div class="row">
+    <div class="span12 offset1 school_header">
+        <div class="row">
+            <div class="span1"><img class="school_pic" src="" ></div>
+			<div class="span8">
+				<address>
+				    <font class="lead">{{ school.name|safe }}</font><br>
+				    {{ school.address1|safe }}{% if school.address2|safe %}, {{school.address2|safe }}{% endif %}<br/> 
+				    {{ school.city|safe }}, {{ school.state|safe }} {{ school.zipcode|safe }}<br>
+				    {{ school.phone_number|format_phone  }}<br>
+                {% if school.website %}<a href="{{ school.website }}" target="_blank">{{ school.website }}</a> {% endif %}
+				</address>
+			</div>
+            <div class="span2 rjustify" style="margin-top:15px;">
+			    <input type="submit" id="{{school.id}}btn" class="span2 btn btn-primary btn-large {% if tagged %} btn-saved {% endif %}"
+                        onClick="toogleSaveSchool({{ school.id }});" value="{%if tagged %}Saved{% else %} Save School {% endif %}">
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+<br/>
+
+<div class="row">
+<div class="span12 offset1">
+<div id="info">
+<h4>General Info:</h4>
+<hr>
+<table>
+<col width="400">
+<col width="auto">
+<tr>
+<td><span class="info-label">School Type:</span> {{ school.school_type|safe|default:"N/A" }}</td>
+<td><span class="info-label">Tuition:</span> {{ school.tuition|safe|default:"N/A" }}</td>
+</tr>
+<tr>
+<td><span class="info-label">Program Type:</span> {% if school.program_types %}{{ school.program_types|join:", " }}{% else %}N/A{% endif %}</td>
+<td><span class="info-label">Application Process:</span> TBD </td>
+</tr>
+<tr>
+<td><span class="info-label">Hours:</span> {{ school.hours|default:"N/A" }}</td>
+<td><span class="info-label">Potty Train:</span> {{ school.potty_train|yesno:"Y,N,N/A" }}</td>
+</tr>
+<tr>
+<td><span class="info-label">Programs:</span> {% if school.program_types %}{{ school.programs|join:", " }}{% else %}N/A{% endif %}</td>
+<td><span class="info-label">Financial Aid:</span> {{ school.financial_aid|yesno:"Y,N,N/A" }}</td>
+</tr>
+<tr>
+<td><span class="info-label">Class Size:</span> {% if school.capacity > 0 %}{{ school.capacity }} and under {% else %} N/A {% endif  %}</td>
+<td><span class="info-label">Deposit:</span> {% if school.deposit %}{% if school.deposit.required %} Yes, {{ school.deposit.amount|currency }}{% else %}No{% endif %} {% else %}N/A{% endif %}</td>
+</tr>
+</table>
 </div>
 
+<br/>
+<div id="info">
+<h4>Application Process:</h4>
+<hr>
+<table>
+<col width="400">
+<col width="auto">
+<tr>
+<td><span class="info-label">Age Required to Enroll:</span> TBD </td>
+<td><span class="info-label">Child Playdate:</span> {% if school.schoolapplicationinfo.child_playdates.offered %} {{ school.schoolapplicationinfo.child_playdates.dates }} {% else %} N {% endif %}</td>
+</tr>
+<tr>
+<td><span class="info-label">Application Fee:</span> {%if school.schoolapplicationinfo.application_fee > 0 %} {{ school.schoolapplicationinfo.application_fee|currency }} {% else %} N/A {% endif %}</td>
+<td><span class="info-label">Open House:</span> {%if school.schoolapplicationinfo.open_house.offered %} {{ school.schoolapplicationinfo.open_house.dates }} {% else %} N/A {% endif %} </td>
+</tr>
+<tr>
+<td><span class="info-label">Earliest you can apply:</span> TBD</td>
+<td><span class="info-label">Notification:</span> TBD</td>
+</tr>
+<tr>
+<td><span class="info-label">Submission Method:</span> {% if school.schoolapplicationinfo.submission_method %}{{ school.schoolapplicationinfo.submission_method|join:", " }}{% else %} N/A {% endif %}</td>
+<td><span class="info-label">Application Access:</span> {% if school.schoolapplicationinfo.application_url %} <a href="{{ school.schoolapplicationinfo.application_url }}" target="_blank">Website >></a>{% else %} N/A {% endif %}</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 {% endblock content %}

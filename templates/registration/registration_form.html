@@ -1,14 +1,48 @@
 {% extends "site_base.html" %}
 {% load i18n %}
-{% block header %}{% endblock %}
-{% block footer %}{% endblock %}
+{% load static %}
+
 {% block content %}
-<div class="signup">
+    <div class="container" xmlns="http://www.w3.org/1999/html">
+        <div id="signin-modal" class="section">
+            <form class="modal-form" id="signup-form" action="{% url registration_register %}" method="post">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h3>{% trans "Sign up for KidAdmit" %}</h3>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        {% trans "Save the pre-schools that matter to you!" %}
+                    </p>
 
-<form method="post" action="."> {% csrf_token %}
-  {{ form.as_p }}
+                    <div id="signup_modal_message"></div>
+                    <fieldset>
+                        <label for="user_name">
+                            <strong>{% trans "Name" %}:</strong>
+                        </label>
+                        <input class="span4 required" id="user_name" name="username" placeholder="First and Last Name"
+                               type="text"/>
 
-  <input type="submit" value="{% trans 'Submit' %}" />
-</form>
+                        <label for="id_email_signup">
+                            <strong>{% trans "Email" %}:</strong></label>
+                        <input class="span4 required email" id="id_email_signup" name="email"
+                               placeholder="you@website.com"
+                               type="email"/>
+
+                        <label for="id_password_signup">
+                            <strong>{% trans "Password" %}:</strong>
+                        </label>
+                        <input class="span4 required" id="id_password_signup" name="password1" type="password">
+                        <input type="hidden" id="id_password_signup_2" name="password2" value=""/>
+                    </fieldset>
+                    <input class="btn-facebook btn-signin btn-toolbar" name="commit" type="submit" value="Sign up">
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn-facebook" name="commit"
+                           onclick="$('#facebook-connect-form').submit(); return false;"
+                           value="">
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
-</div>

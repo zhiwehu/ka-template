@@ -2,39 +2,42 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="row">
-        <div class="section section-large offset6">
-            <div class="section-header">
+    <div class="container">
+        <div id="signin-modal" class="section">
+            <div class="modal-header">
                 <h3>Sign in</h3>
             </div>
-            <div class="section-body">
+            <div class="modal-body">
                 <form id="login-form-no-modal" method="post" action="{% url auth_ajax_login %}">
                     {% csrf_token %}
                     <div id="loginMessage-no-modal"></div>
-                    <fieldset>
-                        <label for="id_email_signin-no-modal">Email:</label>
-                        <input type="text" id="id_email_signin-no-modal" name="email" class="input-xlarge required email">
-                        <label for="id_password_signin-no-modal">Password:</label>
-                        <input type="password" id="id_password_signin-no-modal" name="password"
-                               class="input-xlarge required">
-                        <input type="hidden" name="next" value=""/>
-                    </fieldset>
-                    <input class="btn btn-large btn-success" type="submit" value="Login"/>
+                    <label for="user_email">
+                        <strong>{% trans "Email" %}:</strong>
+                    </label>
+                    <input class="span4 required email" id="user_email" name="email" type="email"/>
 
-                    <a class="btn btn-large signup-facebook"
-                       onclick="$('#facebook-connect-form').submit(); return false;" href="#">
-                        <i class="icon-facebook"></i> {% trans "Log in with Facebook" %}
-                    </a>
+                    <label for="user_password">
+                        <strong>{% trans "Password" %}:</strong>
+                    </label>
+                    <input class="span4 required" id="user_password" name="password" type="password"/>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    <input class="btn-facebook btn-signin btn-toolbar" name="commit" type="submit"
+                           value="{% trans "Sign In" %}">
                 </form>
             </div>
-            <div class="section-footer">
-                <a href="#">
-                    <span>{% trans "Forgot password?" %}</span>
-                </a>
-                ·
-                <a id="signup-on-login" href="#" title="{% trans "Sign up" %}">
-                    <span>{% trans "Sign up to KidAdmit" %}</span>
-                </a>
+            <div class="modal-footer">
+                <p>
+                    <input type="button" class="btn-facebook" name="commit"
+                           onclick="$('#facebook-connect-form').submit(); return false;"
+                           value="">
+                </p>
+
+                <p>
+                    <a href="#" class="pull-left">{% trans "Forgot Password?" %}</a>
+                    <a href="#" class="pull-right">
+                        {% trans "Sign up to KidAdmit" %}
+                    </a>
+                </p>
             </div>
         </div>
     </div>

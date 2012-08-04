@@ -1,11 +1,8 @@
 {% extends 'site_base.html' %}
-{% block title %} School Search {% endblock title %}
+{% block head_title %} School Search {% endblock head_title %}
 {% load i18n %}
 
 {% block extra_css %}
-{% endblock extra_css %}
-
-{% block content %}
 <style type="text/css">
 <!--
 #map_canvas { height: 350px; width: 100% ;  }
@@ -41,21 +38,48 @@ padding:5px;
 }
 -->
 </style>
+{% endblock extra_css %}
+
+{% block extra_js %}
 <script type="text/javascript" charset="utf-8">
 function initialize() {
      var myLatLng = new google.maps.LatLng({{ address_geocode.lat }}, {{ address_geocode.lng }});
      var mapOptions = {
-        zoom: 14,
+        zoom: 13,
+        mapTypeControl: true,
+        scrollwheel: false,
+        mapTypeControlOptions: {
+          style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+          style: google.maps.ZoomControlStyle.LARGE
+        },
         center: myLatLng,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+        },
+        scrollwheel: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
       var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
+      var homeImg = new google.maps.MarkerImage("{{STATIC_URL}}images/map/blue-pin.png",
+		new google.maps.Size(32.0, 32.0),
+		new google.maps.Point(0, 0),
+		new google.maps.Point(16.0, 16.0)
+      );
+     var shadow = new google.maps.MarkerImage("{{STATIC_URL}}images/map/shadow.png",
+   	    new google.maps.Size(49.0, 32.0),
+   	    new google.maps.Point(0, 0),
+   	    new google.maps.Point(16.0, 16.0)
+   	);
       var addrMarker = new google.maps.Marker({
           position: myLatLng,
           map: map,
           title: 'Home',
-          icon: 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png',
+          icon: homeImg,
+          shadow: shadow,
           zIndex: 1,
       });
       var infoWindow = new google.maps.InfoWindow({
@@ -91,11 +115,23 @@ function setMarkers(map, locations) {
       for (var i = 0; i < locations.length; i++) {
         var school = locations[i];
         var myLatLng = new google.maps.LatLng(school[1], school[2]);
+        var image = new google.maps.MarkerImage("{{STATIC_URL}}images/map/orange-pin.png",
+       	    new google.maps.Size(32.0, 32.0),
+       	    new google.maps.Point(0, 0),
+       	    new google.maps.Point(16.0, 16.0)
+       	);
+       	var shadow = new google.maps.MarkerImage("{{STATIC_URL}}images/map/shadow.png",
+       	    new google.maps.Size(49.0, 32.0),
+       	    new google.maps.Point(0, 0),
+       	    new google.maps.Point(16.0, 16.0)
+       	);
 
         var marker = new google.maps.Marker({
             position: myLatLng,
             map: map,
             title: school[0],
+            icon: image,
+            shadow: shadow,
             animation : google.maps.Animation.DROP,
             infoWindowIndex : i,
             zIndex: 0,
@@ -125,8 +161,40 @@ window.onload = loadScript;
 <script type="text/javascript" charset="utf-8">
     var endless_on_scroll_margin = 1;
 </script>
-<div id="map_canvas"></div>
+<script type="text/javascript" charset="utf-8">
+function toggleSaveSchool(id) {
+	var btnId='#'+id+'btn';
+	if (is_login == false) {
+        $("#signin-modal").modal({
+            show: true
+        });
+        $("input[name=next]").val(document.location);
+        return false;
+    }
+	var cmd = 'save';
+	if ($(btnId).attr('class').indexOf('btn-saved') != -1) {
+		cmd = 'remove';
+	}
+	$.post('{% url tag_school %}', {school: id, cmd: cmd,})
+	.success(function(data) {
+			if(cmd != 'save') {
+				$(btnId).removeClass('btn-saved'); 
+				$(btnId).val(' Save School ');
+            } else {
+            	$(btnId).addClass('btn-saved'); 
+				$(btnId).val(' Saved ');
+            }
+	})
+    .error(function(error) {
+    	alert ("Sorry we are experiencing technical problems, please try again later.");
+    });
+	return false;
+}
+</script>
+{% endblock extra_js %}
 
+{% block content %}
+<div id="map_canvas"></div>
 <br/>
 <div class="row">
     <div class="span14">
@@ -152,10 +220,10 @@ window.onload = loadScript;
 					<label style="margin-top: 3px;"><strong>School Name</strong></label>
 					<input style="margin-bottom: 1px ;" name="school_name" id="id_school_name" class="span3" value="{% if search_form.school_name.value %}{{ search_form.school_name.value }}{% endif %}" placeholder="{% trans "e.g. Tiny Giants" %}">
 					<label style="margin: 3px 0px 0px 0px;"><strong>School Type</strong></label>
-					<label style="margin: 0px;" for="id_school_types_0" class="checkbox inline">
+					<label style="margin: 1px;" for="id_school_types_0" class="checkbox inline">
 					<input {% if 'PS' in search_form.school_types.value %}checked="checked"{% endif %} type="checkbox" name="school_types" value="PS" id="id_school_types_0">
 					Pre-school</label>
-					<label style="margin: 0px;" for="id_school_types_1" class="checkbox inline">
+					<label style="margin: 1px;" for="id_school_types_1" class="checkbox inline">
 					<input {% if 'DC' in search_form.school_types.value %}checked="checked"{% endif %} type="checkbox" name="school_types" value="DC" id="id_school_types_1">
 					Daycare</label>
 					<div style="margin-top: 5px; text-align: center;">

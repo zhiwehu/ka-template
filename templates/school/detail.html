@@ -1,5 +1,5 @@
 {% extends 'site_base.html' %}
-{% block title %} {{school.name|escape}} {% endblock title %}
+{% block head_title %} {{school.name|escape}} {% endblock %}
 {% load humanize %}
 {% block extra_css %}
 <style type="text/css">
@@ -35,41 +35,37 @@ z-index:-1;
 {% endblock extra_css %}
 
 
-{% block content %}
-<script type="text/javascript" charset="UTF8">
-
-function toogleSaveSchool(id){
-	var btnId="#"+id+"btn";
-	var savedClass = "btn-saved"; 
-	var action = "save";
-	if ($(btnId).attr("class").indexOf(savedClass) != -1) {
-		action = "remove";
-	}
-    $.ajax({
-        type:"POST",
-        url: "{% url tag_school %}",
-        data: {
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            school:id,
-            action:action,
-        },
-        success: function(data) {
-            if(action=='remove') {
-                $(btnId).removeClass(savedClass); 
-                $(btnId).val(' Save School ');
+{% block extra_js %}
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function () {
+	$('#saveSchool').submit(function(event){
+		if (is_login == false) {
+	        $("#signin-modal").modal({
+	            show: true
+	        });
+	        $("input[name=next]").val(document.location);
+	        return false;
+	    }
+		$.post(this.action, $(this).serialize())
+		.success(function(data) {
+			if($('#saveSchool').attr('class').indexOf('saved') != -1) {
+				$('#saveSchool').removeClass('saved'); 
+				$('#saveSchoolbtn').val(' Save School ');
             } else {
-            	$(btnId).addClass(savedClass);
-            	$(btnId).val(' Saved ');
+            	$('#saveSchool').addClass('saved');
+            	$('#saveSchoolbtn').val(' Saved ');
             }
-        },
-        error: function(error) {
-            alert (error);
-        }
-    });
-    return false;
-}
+		})
+	    .error(function(error) {
+	    	alert ("Sorry we are experiencing technical problems, please try again later.");
+	    });
+	    return false;
+	});
+});
 </script>
+{% endblock %}
 {% load common_tags %}
+{% block content %}
 <br/>
 <div class="row">
     <div class="span12 offset1 school_header">
@@ -85,8 +81,12 @@ function toogleSaveSchool(id){
 				</address>
 			</div>
             <div class="span2 rjustify" style="margin-top:15px;">
-			    <input type="submit" id="{{school.id}}btn" class="span2 btn btn-primary btn-large {% if tagged %} btn-saved {% endif %}"
-                        onClick="toogleSaveSchool({{ school.id }});" value="{%if tagged %}Saved{% else %} Save School {% endif %}">
+            	<form id="saveSchool" method="post" action="{% url tag_school %}" class="{% if tagged %}saved{% endif %}">{%csrf_token%}
+            	<input type="hidden" name="school" id="id_school" value="{{school.id}}">
+            	<input type="hidden" name="cmd" id="id_cmd" value="{%if tagged %}remove{% else %}save{% endif %}">
+			    <input type="submit" name="savebtn" id="saveSchoolbtn" class="span2 btn btn-primary btn-large"
+                        value="{%if tagged %}Saved{% else %} Save School {% endif %}">
+            	</form>
             </div>
         </div>
     </div>

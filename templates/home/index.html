@@ -5,54 +5,63 @@
     <!--search begin-->
     <div class="highlight-row">
         <div class="container">
-            <form class="navbar-search container" action="#" method="post" name="nearbySearch">
-                <input name="address" id="id_address" class="input-medium span6" placeholder="What's your zip code or address?"
-                       type="text">
-                <input class="btn btn-success btn-large1 mt7 span2 fw" value="Search" type="submit">
+            <form class="form-horizontal" action="#" method="post" name="nearbySearch">
+                <fieldset>
+                    <!--<div class="control-group">
+                   <div class="controls">-->
+                    <div class="input-append">
+                        <input type="search" class="span5" id="appendedInputButton" size="16">
+                        <button class="btn btn-success btn-large inner-offset-1 inner-offset-x-3" type="button">
+                            <strong>Search</strong></button>
+                    </div>
+                    <!--</div>
+                    </div>-->
+                </fieldset>
             </form>
         </div>
     </div>
     <!--search end-->
     <!--body begin-->
     <div class="container content">
-        <div class="row ml0">
-            <div class="w630 pull-left">
-                <div class="fs28 fProxima pl20" style="height: 100px; line-height: 100px;">
-                    You deserve to spend more time with your kid!</div>
-                <div class="kid-unit">
-                    <div class="pull-left">
-                        <img src="{{ STATIC_URL }}img/home.png" class="kid-home" />
+        <div class="row-fluid">
+            <div class="span8">
+                <h2 class="inner-offset-y-1">
+                    You deserve to spend more time with your kid!</h2>
+
+                <div class="well">
+                    <div class="span2">
+                        <img src="{{ STATIC_URL }}img/home.png" class="kid-home pull-right"/>
                     </div>
-                    <div class="pull-left kid-calendar span400">
-                        <h3 class="fs16 fProxima">
+                    <div class="span10">
+                        <h3>
                             Select as many preschools that interest you</h3>
-                        <p class="fProxima">
+
+                        <p>
                             Know their application process including are eligibility, tour dates and application
                             deadlines.
                         </p>
                     </div>
                 </div>
-                <div class="kid-unit">
-                    <div class="pull-left">
-                        <img src="{{ STATIC_URL }}img/calendar.png" class="kid-home" /></div>
-                    <div class="pull-left kid-calendar span400">
-                        <h3 class="fs16 fProxima">
+                <div class="well">
+                    <div class="span2">
+                        <img src="{{ STATIC_URL }}img/calendar.png" class="kid-home pull-right"/></div>
+                    <div class="span10">
+                        <h3>
                             Sync those dates and deadlines to your own calendar</h3>
-                        <p class="fProxima">
+
+                        <p>
                             Kid Admit makes is easy for you to stay organized and not miss a deadline.
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="w300forimg pull-right">
-                <img src="{{ STATIC_URL }}img/kid.jpg" style="width: 296px;" />
+            <div class="span4 img-background">
+                <img src="{{ STATIC_URL }}img/kid.jpg" style="width: 296px;"/>
             </div>
         </div>
-        <br />
-        <hr class="hr0" />
-        <br />
-        <div class="row m10">
-            <img src="{{ STATIC_URL }}img/carousel.jpg" />
+        <hr class="hr0"/>
+        <div class="row">
+            <img src="{{ STATIC_URL }}img/carousel.jpg"/>
         </div>
     </div>
     <!--body end-->

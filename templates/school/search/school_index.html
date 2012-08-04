@@ -1,21 +1,26 @@
- {% load endless %}
- {% lazy_paginate school_list %}
+{% load endless %}
+{% lazy_paginate school_list %}
 {% for school in school_list %}
+{% load common_tags %}
+{% show_current_number as page_number %}
+{% calc_item_number forloop.counter0 page_number as item_number %}
     <ul class="unstyled">
         <div class="row">
-            <div class="span1"><a href="javascript:openMarker({{forloop.counter0}})"><img src="{{STATIC_URL}}images/home1.png" /></a></div>
+            <div class="span1"><a href="javascript:openMarker({{item_number}});"><img src="{{STATIC_URL}}images/home1.png" /></a></div>
             <div class="span5"><strong><a href="{% url school_detail school.id school.slug %}">{{ school.name }}</a></strong>
-                    <div class="">{{ school.school_type }}</div>
-                    <!-- <div class="">{{ school.schoolapplicationinfo }}</div> -->
+                    <div><strong>School Type: </strong>{{ school.school_type }}</div>
+                    <div><strong>Program Type: </strong>{{ school.program_types }}</div>
+                    <div><strong>Hours: </strong>{{ school.hours|default:"TBD" }}</div>
+                    <div><strong>Tuition: </strong>{{ school.tuition|default:"0"|currency }}</div>
             </div>
-            <div class="span2 rjustify">
-                <input type="submit" id="{{school.id}}btn" class="span2 btn btn-primary {% if school.tagged %} btn-saved {% endif %}"
-                        onClick="toggleSaveSchool({{ school.id }});" value="{%if school.tagged %}Saved{% else %} Save School {% endif %}">
-                <div>{{ school.distance }} miles away</div>
+            <div class="span2">
+                <input style="float: right;" type="submit" id="{{school.id}}btn" class="span2 btn {% if school.tagged %} btn-saved {% endif %}"
+                        onClick="toggleSaveSchool('{{ school.id }}');" value="{%if school.tagged %}Saved{% else %} Save School {% endif %}">
+                <div style="text-align: center;">{{ school.distance }} miles away</div>
             </div>
         </div>
        <hr>
     </ul>
     
 {% endfor %} 
-{% show_more '<input type="submit" class="span2 btn btn-info btn-small" value="Get more" />' '<input type="submit" class="span2 btn btn-small btn-info" value="Loading ..." />' %}
+{% show_more '' '<input type="submit" class="span2 btn btn-small btn-info" value="Loading ..." />' %}

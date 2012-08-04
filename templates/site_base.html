@@ -4,11 +4,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<head>
+    <meta content="We Make the Preschool Application Process Easy - KidAdmit" name="description"/>
+    <meta content="preschool, pre-school, kid, child, admit, applications, Application process, school"
+          name="keywords"/>
+    <meta content="KidAdmit" property="og:title"/>
+    <meta content="We Make the Preschool Application Process Easy - KidAdmit" property="og:description"/>
+    <link rel="shortcut icon" href="{{STATIC_URL}}image/favicon.ico %}">
+    <meta property="og:title"
+          content="KidAdmit - Are you unorganized and overwhelmed about the preschool application process? We can help!"/>
+    <meta property="og:type" content="company"/>
+    <meta property="og:site_name" content="KidAdmit"/>
+    <meta property="og:url" content="http://kidadmit.com"/>
+    <meta property="og:image" content="null"/>
+    <meta property="og:description"
+          content="Are you unorganized and overwhelmed about the preschool application process? KidAdmit is here to help!"/>
     <title>{% block head_title %}{% trans "Home" %}{% endblock %} | {% trans "KidAdmit" %}</title>
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="{{ STATIC_URL }}css/newkidadmit.css" rel="stylesheet" type="text/css"/>
     <script src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
+    <script src="{{ STATIC_URL }}js/main.js"></script>
     {% block extra_css %}
     {% endblock %}
 </head>
@@ -30,19 +45,20 @@
         <div class="modal-body">
             <div id="signin_modal_message"></div>
             <fieldset>
-                <label for="user_email">
+                <label for="signin_email">
                     <strong>{% trans "Email" %}:</strong>
                 </label>
-                <input class="required email span4" id="user_email" name="email" type="email"/>
+                <input class="required email span4" id="signin_email" name="email" type="email"/>
 
                 <label for="user_password">
                     <strong>{% trans "Password" %}:</strong>
                 </label>
                 <input class="span4 required" id="user_password" name="password" type="password"/>
-                <input type="hidden" name="next" value="" />
+                <input type="hidden" name="next" value=""/>
             </fieldset>
 
-            <input class="btn-facebook btn-signin btn-toolbar" name="commit" type="submit" value="{% trans "Sign In" %}">
+            <input class="btn-facebook btn-signin btn-toolbar" name="commit" type="submit"
+                   value="{% trans "Sign In" %}">
         </div>
         <div class="modal-footer">
             <p>
@@ -63,32 +79,59 @@
 <!--sign in end-->
 
 <!--forgot password begin-->
-<div id="forgotpassword" class="modal hide fade">
-    <form class="modal-form" id="Form2" action="#" method="post">
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">×</a>
+<div id="forgotpassword-modal" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
 
-            <h3 class="small">{% trans "Forgot Your Password" %}?</h3>
-        </div>
-        <div class="modal-body">
-            <p>
-                {% trans "Enter your email and we'll send you instructions on how to reset your password." %}</p>
+        <h3 class="small">{% trans "Forgot Your Password" %}?</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            {% trans "Enter your email and we'll send you instructions on how to reset your password." %}
+        </p>
 
-            <p>
-                <label for="user_email">
-                    <strong>Email:</strong>
+        <div id="forget_password_modal_message"></div>
+        <form class="modal-form" id="forget-password-form" action="{% url auth_ajax_password_reset %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <label for="forget_password_email">
+                    <strong>{% trans "Email" %}:</strong>
                 </label>
-            </p>
+                <input class="span4 required" id="forget_password_email" name="email" type="email">
+            </fieldset>
+            <input class="btn-facebook btn-signin btn-toolbar" name="commit" type="submit" value="{% trans "Submit" %}">
+        </form>
+    </div>
+</div>
+<!--forgot password end-->
 
-            <p>
-                <input class="span4 required" id="Email2" name="email" type="email">
-            </p>
+<!--forgot password begin-->
+<div id="forgotpassword-done-modal" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
 
-            <p>
-                <input class="btn-facebook btn-signin btn-toolbar" name="commit" type="submit" value="Sign in">
-            </p>
-        </div>
-    </form>
+        <p>
+            {% blocktrans %}
+                We've sent password reset instructions to your email address.
+            {% endblocktrans %}
+        </p>
+    </div>
+    <div class="modal-body">
+        <p>
+            {% trans "We've sent and email to:" %}
+        </p>
+        <p>
+            <strong id="reset_email_address"></strong>
+        </p>
+
+        <p>
+            {% blocktrans %}
+                If you don't receive instructions within a couple of minutes. Check your email span or junk folders, or try <a href="#">resending your request</a>.
+            {% endblocktrans %}
+        </p>
+
+        <button id="reset_password_ok" class="btn-facebook btn-signin btn-toolbar">{% trans "OK" %}</button>
+    </div>
 </div>
 <!--forgot password end-->
 
@@ -146,16 +189,16 @@
 <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
 {% block extra_js %}{% endblock %}
 <script charset="utf-8" type="text/javascript">
+    var is_login = false;
     $(document).ready(function () {
-        var is_login = false;
         {% if user.is_authenticated %}
             is_login = true;
         {% endif %}
 
-        $("a.need_login").click(function() {
+        $("a.need_login").click(function () {
             if (is_login == false) {
                 $("#signin-modal").modal({
-                    show: true
+                    show:true
                 });
 
                 $("input[name=next]").val($(this).attr("href"));
@@ -219,6 +262,32 @@
             return false;
         });
 
+        $("#forget-password-form").validate();
+
+        $("#forget-password-form").submit(function () {
+            var form = $("#forget-password-form");
+            if (form.valid()) {
+                $("#forget_password_modal_message").empty();
+                $.ajax({
+                    url:"{% url auth_ajax_password_reset %}",
+                    type:"POST",
+                    data:form.serialize(),
+                    success:function (data) {
+                        if (data.success != null) {
+                            $("#forgotpassword-modal").modal("hide");
+                            $("#reset_email_address").html(data.email);
+                            $("#forgotpassword-done-modal").modal("show");
+                        } else {
+                            $.each(data, function (key, value) {
+                                $("#forget_password_modal_message").append("<p>" + key + ": " + value + "</p>");
+                            });
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+
         $("#signup-on-login").click(function () {
             $("#signin-modal").modal("hide");
             $("#signup-modal").modal("show");
@@ -231,9 +300,13 @@
 
         $("#forgot-password").click(function () {
             $("#signin-modal").modal("hide");
-            $("#forgotpassword").modal("show");
+            $("#forgotpassword-modal").modal("show");
         });
-        //test commit by Ocxers
+
+    $("#reset_password_ok").click(function() {
+        $("#forgotpassword-done-modal").modal("hide");
+    });
+
     });
 </script>
 </body>

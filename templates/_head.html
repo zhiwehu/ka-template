@@ -10,10 +10,6 @@
                 <li><a href="#">My Schools</a> </li>
                 <li class="active"><a href="#">Calendar</a></li>
             </ul>
-        {% else %}
-            <ul class="nav">
-                <li><a class="need_login" href="{% url test_login %}">Test login</a></li>
-            </ul>
         {% endif %}
             <ul class="nav pull-right">
                 {% if user.is_authenticated %}

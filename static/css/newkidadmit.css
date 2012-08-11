@@ -20,6 +20,7 @@ body,html
     font-weight: 200;
     line-height: 75px;
     color: #FFFFFF;
+    margin-left: 0px;
 }
 .navbar .nav > li > a
 {
@@ -66,7 +67,7 @@ body,html
 /*new*/
 .highlight-row
 {
-    background: #E1DCD6 url(../img/map.png) 0 0 no-repeat;
+	background: #E1DCD6 url(../img/map.png) no-repeat 40% 0;
     padding: 350px 0 0 0;
     border-top: 1px solid #DDE4E9;
     border-bottom: 1px solid #DDE4E9;
@@ -84,6 +85,13 @@ body,html
 .modal-header
 {
     border-bottom: 1px solid #DDDDDD;
+}
+.kid-btn
+{
+	border: none;
+	background: url(../img/btns.png) 0 0 no-repeat;
+	color: White;
+	cursor: pointer;
 }
 .btn-facebook
 {
@@ -115,6 +123,70 @@ body,html
 .btn-signin:active, .btn-signin.active
 {
     background: url(../img/btns.png) 0 -189px no-repeat;
+}
+.kid-btn-follow
+{
+	border: none;
+	background-position: 2px -226px;
+	width: 63px;
+	height: 20px;
+	display: block;
+}
+.kid-btn-like
+{
+	border: none;
+	background-position: -64px -226px;
+	width: 50px;
+	height: 20px;
+	display: block;
+}
+.kid-btn-apply
+{
+	border: none;
+	background-position: 0px -290px;
+	width: 64px;
+	height: 35px;
+	display: block;
+}
+.kid-btn-apply:hover
+{
+	background-position: 0px -325px;
+}
+.kid-btn-apply:active
+{
+	background-position: 0px -360px;
+}
+.kid-btn-revoke-access
+{
+	background-position: 0px -397px;
+	width: 210px !important;
+	height: 35px;
+	color: #258CCE;
+	font-weight: 500;
+}
+.kid-btn-revoke-access:hover
+{
+	background-position: 0px -432px;
+}
+.kid-btn-revoke-access:active
+{
+	background-position: 0px -467px;
+}
+.kid-btn-connect
+{
+	background-position: 0px -502px;
+	width: 210px !important;
+	height: 35px;
+	color: #258CCE;
+	font-weight: 500;
+}
+.kid-btn-connect:hover
+{
+	background-position: 0px -537px;
+}
+.kid-btn-connect:active
+{
+	background-position: 0px -572px;
 }
 /*new*/
 .section
@@ -161,6 +233,7 @@ body,html
     padding: 10px;
     color: #DDDDDD;
     background: #000000;
+    margin-top: 30px;
 }
 #footer-floor a
 {
@@ -282,6 +355,10 @@ hr {
 .font-weight-normal
 {
     font-weight: normal;
+}
+.font-color-gray
+{
+	color: #AEAEAE;
 }
 
 #navbar-search {

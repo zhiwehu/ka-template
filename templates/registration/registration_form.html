@@ -38,9 +38,7 @@
                     <input class="btn-facebook btn-signin btn-toolbar" name="commit" type="submit" value="Sign up">
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn-facebook" name="commit"
-                           onclick="$('#facebook-connect-form').submit(); return false;"
-                           value="">
+                    <input type="button" class="btn-facebook" onclick="window.location='{% url socialauth_begin 'facebook' %}'" />
                 </div>
             </form>
         </div>

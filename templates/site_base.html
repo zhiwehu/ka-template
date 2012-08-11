@@ -62,9 +62,7 @@
         </div>
         <div class="modal-footer">
             <p>
-                <input type="button" class="btn-facebook" name="commit"
-                       onclick="$('#facebook-connect-form').submit(); return false;"
-                       value=""/>
+                <input type="button" class="btn-facebook" onclick="window.location='{% url socialauth_begin 'facebook' %}'" />
             </p>
 
             <p>
@@ -126,7 +124,7 @@
 
         <p>
             {% blocktrans %}
-                If you don't receive instructions within a couple of minutes. Check your email span or junk folders, or try <a href="#">resending your request</a>.
+                If you don't receive instructions within a couple of minutes. Check your email span or junk folders, or try <a id="reset_password_again" href="#">resending your request</a>.
             {% endblocktrans %}
         </p>
 
@@ -173,9 +171,7 @@
         </div>
         <div class="modal-footer">
             <p>
-                <input type="button" class="btn-facebook" name="commit"
-                       onclick="$('#facebook-connect-form').submit(); return false;"
-                       value="">
+                <input type="button" class="btn-facebook" onclick="window.location='{% url socialauth_begin 'facebook' %}'" />
             </p>
             {% trans "Already have an account? " %}
             <a id="already-have-account" href="#" class="pull-right offset0">{% trans "Sign in" %}</a>
@@ -190,7 +186,7 @@
 {% block extra_js %}{% endblock %}
 <script charset="utf-8" type="text/javascript">
     var is_login = false;
-    $(document).ready(function () {
+    $(function () {
         {% if user.is_authenticated %}
             is_login = true;
         {% endif %}
@@ -300,6 +296,11 @@
 
         $("#forgot-password").click(function () {
             $("#signin-modal").modal("hide");
+            $("#forgotpassword-modal").modal("show");
+        });
+
+        $("#reset_password_again").click(function () {
+            $("#forgotpassword-done-modal").modal("hide");
             $("#forgotpassword-modal").modal("show");
         });
 

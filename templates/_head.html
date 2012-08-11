@@ -13,8 +13,9 @@
         {% endif %}
             <ul class="nav pull-right">
                 {% if user.is_authenticated %}
-                    <form class="navbar-form pull-left">
-                        <input id="navbar-search" type="text" class="span3" placeholder="{% trans "Search..." %}">
+                    <form class="navbar-form pull-left" action="{% url quick_school_search %}" method="post">
+                        {% csrf_token %}
+                        <input id="navbar-search" type="text" class="span3" name="address" placeholder="{% trans "Search..." %}">
                     </form>
 
                     <li class="dropdown">

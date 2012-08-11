@@ -1,154 +1,297 @@
 {% extends 'site_base.html' %}
-{% block head_title %} {{school.name|escape}} {% endblock %}
+
+{% load i18n %}
+
+{% block head_title %} {{ school.name|escape }} {% endblock %}
 {% load humanize %}
 {% block extra_css %}
-<style type="text/css">
-.school_header {
-  padding: 5px 5px 5px 5px;
-  color: black;
-  background-color: #F1F2ED;
- /* border-radius */
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  /* box-shadow */
-  -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-  -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-  box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
-}
-.rjustify { text-align: right;}
-.school_pic {
-width:80px; 
-height: 80px;
-float:left;
-padding:7px 7px 7px 7px;
-z-index:-1;
-}
-.school_link a {color:blue;}
-#info {
-  width: 60%;
-  text-align: left;
-}
+    <style type="text/css">
+        .school_header {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 5px 5px 5px 5px;
+            color: black;
+            background-color: #F1F2ED;
+            /* border-radius */
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            /* box-shadow */
+            -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px;
+            -moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px;
+        }
 
-#info span {font-weight: bold;}
-</style>
+        .rjustify {
+            text-align: right;
+        }
+
+        .school_pic {
+            width: 80px;
+            height: 80px;
+            float: left;
+            padding: 7px 7px 7px 7px;
+            z-index: -1;
+        }
+
+        .school_link a {
+            color: blue;
+        }
+
+        .info {
+            text-align: left;
+        }
+
+        .info span {
+            font-weight: bold;
+        }
+    </style>
 {% endblock extra_css %}
 
 
 {% block extra_js %}
-<script type="text/javascript" charset="utf-8">
-$(document).ready(function () {
-	$('#saveSchool').submit(function(event){
-		if (is_login == false) {
-	        $("#signin-modal").modal({
-	            show: true
-	        });
-	        $("input[name=next]").val(document.location);
-	        return false;
-	    }
-		$.post(this.action, $(this).serialize())
-		.success(function(data) {
-			if($('#saveSchool').attr('class').indexOf('saved') != -1) {
-				$('#saveSchool').removeClass('saved'); 
-				$('#saveSchoolbtn').val(' Save School ');
-            } else {
-            	$('#saveSchool').addClass('saved');
-            	$('#saveSchoolbtn').val(' Saved ');
-            }
-		})
-	    .error(function(error) {
-	    	alert ("Sorry we are experiencing technical problems, please try again later.");
-	    });
-	    return false;
-	});
-});
-</script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#saveSchool').submit(function (event) {
+                if (is_login == false) {
+                    $("#signin-modal").modal({
+                        show:true
+                    });
+                    $("input[name=next]").val(document.location);
+                    return false;
+                }
+                $.post(this.action, $(this).serialize())
+                        .success(function (data) {
+                            if ($('#saveSchool').attr('class').indexOf('saved') != -1) {
+                                $('#saveSchool').removeClass('saved');
+                                $('#saveSchoolbtn').val(' Save School ');
+                            } else {
+                                $('#saveSchool').addClass('saved');
+                                $('#saveSchoolbtn').val(' Saved ');
+                            }
+                        })
+                        .error(function (error) {
+                            alert("Sorry we are experiencing technical problems, please try again later.");
+                        });
+                return false;
+            });
+        });
+    </script>
 {% endblock %}
 {% load common_tags %}
 {% block content %}
-<br/>
-<div class="row">
-    <div class="span12 offset1 school_header">
+    <div class="container">
         <div class="row">
-            <div class="span1"><img class="school_pic" src="" ></div>
-			<div class="span8">
-				<address>
-				    <font class="lead">{{ school.name|safe }}</font><br>
-				    {{ school.address1|safe }}{% if school.address2|safe %}, {{school.address2|safe }}{% endif %}<br/> 
-				    {{ school.city|safe }}, {{ school.state|safe }} {{ school.zipcode|safe }}<br>
-				    {{ school.phone_number|format_phone  }}<br>
-                {% if school.website %}<a href="{{ school.website }}" target="_blank">{{ school.website }}</a> {% endif %}
-				</address>
-			</div>
-            <div class="span2 rjustify" style="margin-top:15px;">
-            	<form id="saveSchool" method="post" action="{% url tag_school %}" class="{% if tagged %}saved{% endif %}">{%csrf_token%}
-            	<input type="hidden" name="school" id="id_school" value="{{school.id}}">
-            	<input type="hidden" name="cmd" id="id_cmd" value="{%if tagged %}remove{% else %}save{% endif %}">
-			    <input type="submit" name="savebtn" id="saveSchoolbtn" class="span2 btn btn-primary btn-large"
-                        value="{%if tagged %}Saved{% else %} Save School {% endif %}">
-            	</form>
+            <div class="span12 school_header">
+                <div class="row">
+                    <div class="span1"><img class="school_pic" src=""></div>
+                    <div class="span8">
+                        <address>
+                            <font class="lead">{{ school.name|safe }}</font><br>
+                            {{ school.address1|safe }}{% if school.address2|safe %}
+                                , {{ school.address2|safe }}{% endif %}<br/>
+                            {{ school.city|safe }}, {{ school.state|safe }} {{ school.zipcode|safe }}<br>
+                            {{ school.phone_number|format_phone }}<br>
+                            {% if school.website %}<a href="{{ school.website }}"
+                                                      target="_blank">{{ school.website }}</a> {% endif %}
+                        </address>
+                    </div>
+                    <div class="span2 rjustify" style="margin-top:15px;">
+                        <form id="saveSchool" method="post" action="{% url tag_school %}"
+                              class="{% if tagged %}saved{% endif %}">{% csrf_token %}
+                            <input type="hidden" name="school" id="id_school" value="{{school.id}}">
+                            <input type="hidden" name="cmd" id="id_cmd"
+                                   value="{%if tagged %}remove{% else %}save{% endif %}">
+                            <input type="submit" name="savebtn" id="saveSchoolbtn"
+                                   class="span2 btn btn-primary btn-large"
+                                   value="{%if tagged %}Saved{% else %} Save School {% endif %}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="page-header">
+                    <h3>{% trans "General Info" %}</h3>
+                </div>
+                <div class="info">
+                    <table>
+                        <tr>
+                            <td><span class="info-label">School Type:</span> {{ school.school_type|safe|default:"N/A" }}
+                            </td>
+                            <td><span class="info-label">Tuition:</span> {{ school.tuition|safe|default:"N/A" }}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="info-label">Program Type:</span>
+                                {% if school.program_types %}{{ school.program_types|join:", " }}{% else %}
+                                    N/A{% endif %}</td>
+                            <td><span class="info-label">Application Process:</span> TBD</td>
+                        </tr>
+                        <tr>
+                            <td><span class="info-label">Hours:</span> {{ school.hours|default:"N/A" }}</td>
+                            <td><span class="info-label">Potty Train:</span> {{ school.potty_train|yesno:"Y,N,N/A" }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="info-label">Programs:</span>
+                                {% if school.program_types %}{{ school.programs|join:", " }}{% else %}N/A{% endif %}
+                            </td>
+                            <td><span
+                                    class="info-label">Financial Aid:</span> {{ school.financial_aid|yesno:"Y,N,N/A" }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="info-label">Class Size:</span>
+                                {% if school.capacity > 0 %}{{ school.capacity }} and under {% else %} N/A {% endif %}
+                            </td>
+                            <td><span class="info-label">Deposit:</span>
+                                {% if school.deposit %}{% if school.deposit.required %} Yes,
+                                    {{ school.deposit.amount|currency }}{% else %}No{% endif %} {% else %}N/A{% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="page-header">
+                    <h3>{% trans "Application Process" %}</h3>
+                </div>
+                <div class="info">
+                    <table>
+                        <tr>
+                            <td><span class="info-label">Age Required to Enroll:</span> TBD</td>
+                            <td><span class="info-label">Child Playdate:</span>
+                                {% if school.schoolapplicationinfo.child_playdates.offered %} {{ school.schoolapplicationinfo.child_playdates.dates }} {% else %}
+                                    N {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="info-label">Application Fee:</span>
+                                {% if school.schoolapplicationinfo.application_fee > 0 %} {{ school.schoolapplicationinfo.application_fee|currency }} {% else %}
+                                    N/A {% endif %}</td>
+                            <td><span class="info-label">Open House:</span>
+                                {% if school.schoolapplicationinfo.open_house.offered %} {{ school.schoolapplicationinfo.open_house.dates }} {% else %}
+                                    N/A {% endif %} </td>
+                        </tr>
+                        <tr>
+                            <td><span class="info-label">Earliest you can apply:</span> TBD</td>
+                            <td><span class="info-label">Notification:</span> TBD</td>
+                        </tr>
+                        <tr>
+                            <td><span class="info-label">Submission Method:</span>
+                                {% if school.schoolapplicationinfo.submission_method %}{{ school.schoolapplicationinfo.submission_method|join:", " }}{% else %}
+                                    N/A {% endif %}</td>
+                            <td><span class="info-label">Application Access:</span>
+                                {% if school.schoolapplicationinfo.application_url %} <a
+                                        href="{{ school.schoolapplicationinfo.application_url }}" target="_blank">Website
+                                    >></a>{% else %} N/A {% endif %}</td>
+                        </tr>
+                    </table>
+                </div>
+
+
+            <div class="page-header">
+                <h3>{% trans "School Calendar" %}</h3>
+            </div>
+                <div class="top-left-right-radius">
+                    <strong>July 11,2012</strong><span class="pull-right font-color-gray">Wednesday</span>
+                </div>
+                <div class="inner-offset-1">
+                    <div class="row-fluid">
+                        <div class="span8">
+                            <h4>
+                                Temple Emanu-EI Preschool</h4>
+                            <p>
+                                Application is due.</p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" class="kid-btn kid-btn-apply"></a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span8">
+                            <h4>
+                                Alta Plaza Preschool</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" class="kid-btn kid-btn-apply"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="top-left-right-radius">
+                    <strong>July 22,2012</strong>
+                </div>
+                <div class="inner-offset-1">
+                    <div class="row-fluid">
+                        <div class="span8">
+                            <h4>
+                                Temple Emanu-EI Preschool</h4>
+                            <p>
+                                Application is due.</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span8">
+                            <h4>
+                                Alta Plaza Preschool</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" class="kid-btn kid-btn-apply"></a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span8">
+                            <h4>
+                                Children's Day School</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span8">
+                            <h4>
+                                Tiny Giants</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span8">
+                            <h4>
+                                C 5 Children's School</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" class="kid-btn kid-btn-apply"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span4 well">
+                <h4>{% trans "Download the Admission Calendar" %}</h4>
+
+                <div class="row-fluid">
+                    <span class="span4">
+                        <a href="#"><img src="{{ STATIC_URL }}img/iCal.png" class="inner-offset-x-1"/></a>
+                    </span>
+                    <span class="span4">
+                        <a href="#"><img src="{{ STATIC_URL }}img/google.png" class="inner-offset-x-1"/></a>
+                    </span>
+                    <span class="span4">
+                        <a href="#"><img src="{{ STATIC_URL }}img/outlook.png" class="inner-offset-x-1"/></a>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<br/>
-
-<div class="row">
-<div class="span12 offset1">
-<div id="info">
-<h4>General Info:</h4>
-<hr>
-<table>
-<col width="400">
-<col width="auto">
-<tr>
-<td><span class="info-label">School Type:</span> {{ school.school_type|safe|default:"N/A" }}</td>
-<td><span class="info-label">Tuition:</span> {{ school.tuition|safe|default:"N/A" }}</td>
-</tr>
-<tr>
-<td><span class="info-label">Program Type:</span> {% if school.program_types %}{{ school.program_types|join:", " }}{% else %}N/A{% endif %}</td>
-<td><span class="info-label">Application Process:</span> TBD </td>
-</tr>
-<tr>
-<td><span class="info-label">Hours:</span> {{ school.hours|default:"N/A" }}</td>
-<td><span class="info-label">Potty Train:</span> {{ school.potty_train|yesno:"Y,N,N/A" }}</td>
-</tr>
-<tr>
-<td><span class="info-label">Programs:</span> {% if school.program_types %}{{ school.programs|join:", " }}{% else %}N/A{% endif %}</td>
-<td><span class="info-label">Financial Aid:</span> {{ school.financial_aid|yesno:"Y,N,N/A" }}</td>
-</tr>
-<tr>
-<td><span class="info-label">Class Size:</span> {% if school.capacity > 0 %}{{ school.capacity }} and under {% else %} N/A {% endif  %}</td>
-<td><span class="info-label">Deposit:</span> {% if school.deposit %}{% if school.deposit.required %} Yes, {{ school.deposit.amount|currency }}{% else %}No{% endif %} {% else %}N/A{% endif %}</td>
-</tr>
-</table>
-</div>
-
-<br/>
-<div id="info">
-<h4>Application Process:</h4>
-<hr>
-<table>
-<col width="400">
-<col width="auto">
-<tr>
-<td><span class="info-label">Age Required to Enroll:</span> TBD </td>
-<td><span class="info-label">Child Playdate:</span> {% if school.schoolapplicationinfo.child_playdates.offered %} {{ school.schoolapplicationinfo.child_playdates.dates }} {% else %} N {% endif %}</td>
-</tr>
-<tr>
-<td><span class="info-label">Application Fee:</span> {%if school.schoolapplicationinfo.application_fee > 0 %} {{ school.schoolapplicationinfo.application_fee|currency }} {% else %} N/A {% endif %}</td>
-<td><span class="info-label">Open House:</span> {%if school.schoolapplicationinfo.open_house.offered %} {{ school.schoolapplicationinfo.open_house.dates }} {% else %} N/A {% endif %} </td>
-</tr>
-<tr>
-<td><span class="info-label">Earliest you can apply:</span> TBD</td>
-<td><span class="info-label">Notification:</span> TBD</td>
-</tr>
-<tr>
-<td><span class="info-label">Submission Method:</span> {% if school.schoolapplicationinfo.submission_method %}{{ school.schoolapplicationinfo.submission_method|join:", " }}{% else %} N/A {% endif %}</td>
-<td><span class="info-label">Application Access:</span> {% if school.schoolapplicationinfo.application_url %} <a href="{{ school.schoolapplicationinfo.application_url }}" target="_blank">Website >></a>{% else %} N/A {% endif %}</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
 {% endblock content %}

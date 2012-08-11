@@ -67,7 +67,7 @@ body,html
 /*new*/
 .highlight-row
 {
-	background: #E1DCD6 url(../img/map.png) no-repeat 40% 0;
+    background: #E1DCD6 url(../img/map.png) no-repeat 40% 0;
     padding: 350px 0 0 0;
     border-top: 1px solid #DDE4E9;
     border-bottom: 1px solid #DDE4E9;
@@ -386,4 +386,8 @@ hr {
     height: 40px;
     margin-bottom: -20px;
     margin-top: -25px;
+}
+.search-background
+{
+	background: url(../img/searchbg.png) 0 0 no-repeat;
 }

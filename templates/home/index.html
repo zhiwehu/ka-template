@@ -4,14 +4,13 @@
 {% block content %}
     <!--search begin-->
     <div class="highlight-row">
-        <div class="container">
+        <div class="container search-background">
             <form class="form-horizontal" action="{% url quick_school_search %}" method="post" name="nearbySearch">
                 {% csrf_token %}
                 <fieldset>
                     <!--<div class="control-group">
                    <div class="controls">-->
-                    <img class="pull-left" src="{{ STATIC_URL }}img/searchbg.png">
-                    <div class="input-append pull-left">
+                    <div class="input-append">
                         <input type="search" class="span5" id="id_address" size="16" name="address">
                         <button class="btn btn-success btn-large inner-offset-1 inner-offset-x-3" type="submit">
                             <strong>Search</strong>

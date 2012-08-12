@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>KidAdmit</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="css/newkidadmit.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <!--header sign in begin-->
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="index.html">KidAdmit</a>
+                <ul class="nav">
+                    <li><a href="#">My Schools</a> </li>
+                    <li class="active"><a href="calendar.html">Calendar</a></li>
+                    <li><a href="#">Test Link</a></li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li class="active">
+                        <input id="navbar-search" type="text" class="span3" name="address" placeholder="Search...">
+                    </li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="img/profile.jpg" style="width: 40px; height: 40px; margin-bottom: -20px;
+                            margin-top: -20px;" />
+                        <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="setting.html">Settings</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Sign out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <div id="cbody" class="container inner-offset-y-2">
+        <div class="row-fluid">
+            <div class="span8 well">
+                <div class="row-fluid">
+                    <div class="span3 pagination-centered">
+                        <img src="img/prof.jpg" />
+                    </div>
+                    <div class="span8">
+                        <ul class="unstyled">
+                            <li>YOU</li>
+                            <li>
+                                <h2 class="font-weight-normal">
+                                    Richard Combs</h2>
+                            </li>
+                            <li>2140 Pierce Street</li>
+                            <li>San Francisco, CA 94103</li>
+                            <li>Mobile - (415)928-6483</li>
+                        </ul>
+                    </div>
+                    <div class="span1">
+                        <strong><a class="pull-right" data-toggle="modal" href="#edit-modal">Edit</a></strong></div>
+                </div>
+            </div>
+            <div class="span4 well">
+                <ul class="unstyled">
+                    <li>YOUR SPOUSE <span class="pull-right"><strong><a class="pull-right" data-toggle="modal"
+                        href="#edit-modal">Edit</a></strong></span></li>
+                    <li>
+                        <h2 class="font-weight-normal">
+                            Sara Combs</h2>
+                    </li>
+                    <li>2140 Pierce Street</li>
+                    <li>San Francisco, CA 94103</li>
+                    <li>Home - (415)928-6483</li>
+                </ul>
+            </div>
+        </div>
+        <div class="top-left-right-radius">
+            <strong>Your Kids</strong>
+        </div>
+        <div class="inner-offset-1">
+            <div class="row-fluid">
+                <div class="span8">
+                    <h3 class="font-size-16">
+                        Ava Combs</h3>
+                    Female, 5 years old
+                </div>
+                <div class="span4">
+                    <span class="pull-right font-size-16"><a class="pull-right" data-toggle="modal" href="#edit-modal">
+                        Edit</a></span></div>
+            </div>
+        </div>
+        <hr class="hr1" />
+        <div class="inner-offset-1">
+            <div class="row-fluid">
+                <div class="span8">
+                    <h3 class="font-size-16">
+                        James Combs</h3>
+                    Male, 3 years old
+                </div>
+                <div class="span4">
+                    <span class="pull-right font-size-16"><a class="pull-right" data-toggle="modal" href="#edit-modal">
+                        Edit</a></span></div>
+            </div>
+        </div>
+        <hr class="hr1" />
+        <div class="row-fluid">
+            <input type="button" class="btn btn-large span12 btn-save inner-offset-y-1" value="Add another Kid" />
+        </div>
+    </div>
+    <footer id="kidfooter">    
+      <div id="footer-floor">
+        <div class="container">
+            <div class="row-fluid">
+               <a href="#" class="pull-left">About</a><a href="#" class="pull-left offset0">Privacy</a><a href="#" class="pull-left offset0">Terms of Use</a><a href="#" class="pull-left offset0">Contect</a><span class="kid-btn kid-btn-follow pull-right"></span><span class="kid-btn kid-btn-like pull-right"></span>
+            </div>
+            <div class="container fcg">Made with in <img src="img/heart.png" /> San Francisco | © 2012 KidAdmit, Inc. All rights reserved.</div>                
+        </div>
+      </div>
+    </footer>
+    <!--edit begin-->
+    <form class="form-horizontal" id="eidt-form" action="#" method="post">
+    <div id="edit-modal" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                ×</button>
+            <h3>
+                Edit</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div class="span5">
+                    <img src="img/prof.jpg" />
+                </div>
+                <div class="span7">
+                    <p>
+                        <h4>
+                            Profile Photo:</h4>
+                    </p>
+                    <p>
+                        <input type="button" class="btn btn-large btn-save span12" value="Upload a new Photo" />
+                    </p>
+                    <p>
+                        <input type="button" class="btn btn-large btn-save btn-refresh-facebook span12" value="Refresh from Facebook" />
+                    </p>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6">
+                    <p>
+                        <label for="user_email">
+                            <strong>First Name:</strong></label>
+                    </p>
+                    <p>
+                        <input class="required span12" id="firstname" name="user[email]" size="30" type="text"
+                            value="Richard"></p>
+                </div>
+                <div class="span6">
+                    <p>
+                        <label for="user_password">
+                            <strong>Last Name:</strong></label></p>
+                    <p>
+                        <input class="span12" id="user_password" name="user[password]" size="30" type="text"
+                            value="Combs"></p>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <p>
+                    <label for="user_email">
+                        <strong>Address:</strong></label>
+                </p>
+                <p>
+                    <input class="required span12" id="Text1" name="user[email]" size="30" type="text"
+                        value="2140 Pierce Street"></p>
+                <p>
+                    <label for="user_email">
+                        <strong>Apt, Suite:</strong></label>
+                </p>
+                <p>
+                    <input class="required span12" id="Text2" name="user[email]" size="30" type="text"
+                        value="Apt 11"></p>
+                <p>
+                    <label for="user_email">
+                        <strong>City:</strong></label>
+                </p>
+                <p>
+                    <input class="required span12" id="Text3" name="user[email]" size="30" type="text"
+                        value="San Francisco"></p>
+            </div>
+            <div class="row-fluid">
+                <div class="span6">
+                    <p>
+                        <label for="user_email">
+                            <strong>State:</strong></label>
+                    </p>
+                    <p>
+                        <select id="select01" class="span12">
+                            <option>California</option>
+                        </select></p>
+                </div>
+                <div class="span6">
+                    <p>
+                        <label for="user_password">
+                            <strong>Zip Code:</strong></label></p>
+                    <p>
+                        <input class="span12" id="Text5" name="user[password]" size="30" type="text" value="94123"></p>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6">
+                    <p>
+                        <label for="user_email">
+                            <strong>Phone Number:</strong></label>
+                    </p>
+                    <p>
+                        <input class="required span12" id="Text6" name="user[email]" size="30" type="text"
+                            value="415 - 928 - 6745"></p>
+                    </p>
+                </div>
+                <div class="span6">
+                    <p>
+                        <label for="user_password">
+                            <strong>Email:</strong></label></p>
+                    <p>
+                        <input class="span12" id="Text4" name="user[password]" size="30" type="text" value="rich@gmail.com"></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row-fluid">
+                <input type="button" class="btn btn-large btn-success span12" value="Save" />
+            </div>
+        </div>
+    </div>
+    </form>
+    <!--edit end-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        var deh = document.documentElement.clientHeight;
+        if (cbody.offsetHeight < deh - 75 - 85) {
+            kidfooter.style.margin = (deh - cbody.offsetHeight - 75 - 85 + 12).toString() + "px 0px 0px 0px";
+        }
+    </script>
+</body>
+</html>

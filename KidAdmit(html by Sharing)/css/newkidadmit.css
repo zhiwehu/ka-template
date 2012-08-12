@@ -143,6 +143,14 @@ form
 	height: 20px;
 	display: block;
 }
+.kid-btn-facebook-like
+{
+	border: none;
+	background-position: -220px -227px;
+	width: 82px;
+	height: 25px;
+	display: block;
+}
 .kid-btn-apply
 {
 	border: none;
@@ -304,6 +312,10 @@ form
 	padding-top: 15px !important;
 	padding-bottom: 15px !important;
 }
+.inner-offset-y-top-1
+{
+	padding-top: 15px !important;
+}
 .inner-offset-y-2
 {
 	padding-top: 30px;
@@ -399,6 +411,10 @@ input[type="search"]
 {
   margin: 0px 0px 18px 0;
 }
+.hr1
+{
+	margin: 0px 0px 5px 0px;
+}
 hr {
   margin: 18px 0;
   border: 0;
@@ -414,6 +430,11 @@ hr {
 .font-color-gray
 {
 	color: #AEAEAE;
+}
+.font-size-16
+{
+	font-size: 16px;
+	line-height: 22px;
 }
 #navbar-search {
     border: 1px solid #258CCE;
@@ -448,4 +469,135 @@ hr {
 .search-list-color
 {
 	color: #258cce;
+}
+.btn
+{
+	font-weight: bolder;
+}
+.btn-apply 
+{
+  color: #FFFFFF;
+  background-color: #FB6306;
+  *background-color: #FB6306;
+  background-image: -ms-linear-gradient(top, #fbb450, #FB6306);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fbb450), to(#FB6306));
+  background-image: -webkit-linear-gradient(top, #fbb450, #FB6306);
+  background-image: -o-linear-gradient(top, #fbb450, #FB6306);
+  background-image: -moz-linear-gradient(top, #fbb450, #FB6306);
+  background-image: linear-gradient(top, #fbb450, #FB6306);
+  background-repeat: repeat-x;
+  border-color: #FB6306 #FB6306 #ad6704;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#fbb450', endColorstr='#FB6306', GradientType=0);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.btn-save
+{
+	color: #258cce;
+}
+.btn-save:hover,
+.btn-save:active
+{
+	color: #258cce;
+}
+.btn-apply:hover,
+.btn-apply:active,
+.btn-apply.active,
+.btn-apply.disabled,
+.btn-apply[disabled] 
+{
+	color: #FFFFFF;
+  background-color: #FB6306;
+  *background-color: #df8505;
+}
+
+.btn-apply:active,
+.btn-apply.active 
+{
+	color: #FFFFFF;
+  background-color: #c67605 \9;
+}
+.btn-refresh-facebook 
+{
+  color: #364274;
+  background-color: #c4d2db;
+  *background-color: #c4d2db;
+  background-image: -ms-linear-gradient(top, #dee3e7, #c4d2db);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#dee3e7), to(#c4d2db));
+  background-image: -webkit-linear-gradient(top, #dee3e7, #c4d2db);
+  background-image: -o-linear-gradient(top, #dee3e7, #c4d2db);
+  background-image: -moz-linear-gradient(top, #dee3e7, #c4d2db);
+  background-image: linear-gradient(top, #dee3e7, #c4d2db);
+  background-repeat: repeat-x;
+  border-color: #c4d2db #c4d2db #ad6704;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#dee3e7', endColorstr='#c4d2db', GradientType=0);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.btn-refresh-facebook:hover,
+.btn-refresh-facebook:active,
+.btn-refresh-facebook.active,
+.btn-refresh-facebook.disabled,
+.btn-refresh-facebook[disabled] 
+{
+	color: #364274;
+  background-color: #c4d2db;
+  *background-color: #c4d2db;
+} 
+
+h1 small
+{
+	color: #000000;
+}
+ul
+{
+	margin-bottom: 0px;
+}
+li
+{
+	font-size: 14px;
+	line-height: 22px;
+}
+.close
+{
+	font-size: 30px;
+}
+#edit-modal
+{
+	width: 365px;
+	max-height: 780px;
+	margin: -360px 0 0 -170px;
+}
+#edit-modal .modal-body 
+{
+	max-height: 780px;
+}
+.btn-success {
+  background-color: #699f13;
+  *background-color: #699f13;
+  background-image: -ms-linear-gradient(top, #70ad14, #699f13);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70ad14), to(#699f13));
+  background-image: -webkit-linear-gradient(top, #70ad14, #699f13);
+  background-image: -o-linear-gradient(top, #70ad14, #699f13);
+  background-image: -moz-linear-gradient(top, #70ad14, #699f13);
+  background-image: linear-gradient(top, #70ad14, #699f13);
+  background-repeat: repeat-x;
+  border-color: #699f13 #699f13 #387038;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#70ad14', endColorstr='#699f13', GradientType=0);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+
+.btn-success:hover,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+  background-color: #699f13;
+  *background-color: #499249;
+}
+
+.btn-success:active,
+.btn-success.active {
+  background-color: #408140 \9;
 }

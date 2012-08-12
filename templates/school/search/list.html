@@ -3,6 +3,10 @@
 {% load i18n %}
 
 {% block extra_css %}
+
+<!--this css for slider-->
+<link href="{{ STATIC_URL }}css/nouislider.css" rel="stylesheet" type="text/css" />
+
 <style type="text/css">
 <!--
 #map_canvas { height: 350px; width: 100% ;  }
@@ -195,14 +199,12 @@ function toggleSaveSchool(id) {
 
 {% block content %}
 <div id="map_canvas"></div>
-<br/>
-<div class="row">
-    <div class="span14">
-        <div class="row">
-            <div class="span8 offset2">
+<div class="container inner-offset-y-1">
+     <div class="row-fluid">
+            <div class="span8">
             {% if code == 'success' %}
                 {% if total_results > 0 %}
-                    <div class="round-grey"><strong>{{ total_results }} Schools Nearby</strong></div><br>
+                    <div class="top-left-right-radius"><strong>{{ total_results }} Schools Nearby</strong></div>
                     {% include page_template %}
                 {% else %}
                     <div> Sorry, we were unable to find schools matching that criteria in your neighborhood.</div>
@@ -211,28 +213,77 @@ function toggleSaveSchool(id) {
                 <div> Sorry, we are having technical problems. Please stop by later.</div>
             {% endif %}
             </div>
-            <div class="span4">
-                <form style="padding-left: 7px;" class="well round-grey" method="post" action="{% url school_search %}" name="search_criteria">{% csrf_token %}
-					<label><strong>Filter by:</strong></label>
-					<hr style="color:blue;background-color:blue;">
-					<label style="margin: 0px;"><strong>What's your zip code or address?</strong></label>
-					<input style="margin-bottom: 1px ;" name="address" id="id_address" class="span3" value="{% if search_form.address.value %}{{ search_form.address.value }}{% endif %}" placeholder="{% trans "e.g. 94134" %}">
-					<label style="margin-top: 3px;"><strong>School Name</strong></label>
-					<input style="margin-bottom: 1px ;" name="school_name" id="id_school_name" class="span3" value="{% if search_form.school_name.value %}{{ search_form.school_name.value }}{% endif %}" placeholder="{% trans "e.g. Tiny Giants" %}">
-					<label style="margin: 3px 0px 0px 0px;"><strong>School Type</strong></label>
-					<label style="margin: 1px;" for="id_school_types_0" class="checkbox inline">
+            <div class="span4 well" style="margin-top: -60px;">
+                <form method="post" action="{% url school_search %}" name="search_criteria">{% csrf_token %}
+					<strong>Filter by:</strong>
+                    <hr class="outer-offset-y-1" />
+                    <fieldset>
+					<p>
+                        <strong>What's your zip code?</strong></p>
+                        <p>
+					<input class="span12" name="address" id="id_address" value="{% if search_form.address.value %}{{ search_form.address.value }}{% endif %}" placeholder="{% trans "e.g. 94134" %}">
+					</p>
+                     <p>
+                     <strong>School Name</strong></p>
+                    <p>
+					<input class="span12" name="school_name" id="id_school_name" value="{% if search_form.school_name.value %}{{ search_form.school_name.value }}{% endif %}" placeholder="{% trans "e.g. Tiny Giants" %}">
+					</p>
+                    <p>
+                        <strong>School Type</strong></p>
+                    <p>
+                        <span class="span6">
+                            <label for="id_school_types_0" class="label_check">
+                                <input {% if 'PS' in search_form.school_types.value %}checked="checked"{% endif %} type="checkbox" name="school_types" value="PS" id="id_school_types_0"/>Pre-school
+                            </label>
+                        </span>
+                        <span class="span6">
+                            <label for="id_school_types_1" class="label_check">
+                                <input {% if 'DC' in search_form.school_types.value %}checked="checked"{% endif %} type="checkbox" name="school_types" value="DC" id="id_school_types_1" />Daycare
+                            </label>
+                        </span>
+					<!--<label style="margin: 1px;" for="id_school_types_0" class="checkbox inline">
 					<input {% if 'PS' in search_form.school_types.value %}checked="checked"{% endif %} type="checkbox" name="school_types" value="PS" id="id_school_types_0">
 					Pre-school</label>
 					<label style="margin: 1px;" for="id_school_types_1" class="checkbox inline">
 					<input {% if 'DC' in search_form.school_types.value %}checked="checked"{% endif %} type="checkbox" name="school_types" value="DC" id="id_school_types_1">
-					Daycare</label>
-					<div style="margin-top: 5px; text-align: center;">
-					<input class="btn btn-success span3" value="Apply Filters" type="submit">
-					</div>
+					Daycare</label>-->
+                    </p>
+                    <p>
+                    <strong>Age Range</strong></p>
+                    <div id="sliderbar" class="sliderbar">
+                    </div>
+                    <!--可以在这里取值，实际使用，可以用hidden-->
+                    <span id="lowValue">1</span> <span id="highValue">5</span>
+                    <div class="divider">
+                    </div>
+                    <input type="submit" class="kid-btn kid-btn-applyfilter outer-offset-y-1" value=""></input>
+                    </fieldset>
                 </form>
             </div>
-        </div>
     </div>
 </div>
+<script src="{{ STATIC_URL }}js/jquery.nouislider.js"></script>
+    <script>
+        /* Then call the plugin function on document ready. */
+        $(function () {
 
+            //$(".sliderbar").noUiSlider();
+            $("#sliderbar").noUiSlider("init", { bar: 'off', startMin: 1, startMax: 5, step: 4, point: 2, setTo: 1, scale: [1, 5], tracker:
+
+	            function () {
+	                //$("#sliderbar").setTo(3);
+	                $("#lowValue").text(
+			            $("#sliderbar").noUiSlider("getValue")[0]     // Without options, 'getValue' returns an array.
+		            );
+
+	                $("#highValue").text(
+			            $("#sliderbar").noUiSlider("getValue", { point: "upper" })
+		            );
+
+	            }
+
+            });
+
+        });
+    </script>
 {% endblock content %}

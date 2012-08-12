@@ -215,6 +215,7 @@ a:hover {
 .span9 {
   width: 700px;
 }
+
 .span8 {
   width: 620px;
 }
@@ -225,10 +226,6 @@ a:hover {
 
 .span6 {
   width: 460px;
-}
-
-.span55 {
-  width: 360px;
 }
 
 .span5 {
@@ -792,7 +789,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  /*height: 18px;*/
+  height: 18px;
   padding: 4px;
   margin-bottom: 9px;
   font-size: 13px;
@@ -955,8 +952,6 @@ input[type="checkbox"]:focus {
 
 .input-small {
   width: 90px;
-  padding: 5px 0;
-  line-height: 18px;
 }
 
 .input-medium {
@@ -2553,9 +2548,9 @@ table .span24 {
 
 .close {
   float: right;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
-  line-height: 28px;
+  line-height: 18px;
   color: #000000;
   text-shadow: 0 1px 0 #ffffff;
   opacity: 0.2;
@@ -2917,39 +2912,6 @@ button.close {
 .btn-inverse.active {
   background-color: #080808 \9;
 }
-
-.btn-facebook {
-  color: #4462A2;
-  font-weight: bold;
-  background-color: #DDE4EA;
-  *background-color: #DDE4EA;
-  background-image: -ms-linear-gradient(top, #DDE4EA, #DDE4EA);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#DDE4EA), to(#DDE4EA));
-  background-image: -webkit-linear-gradient(top, #DDE4EA, #DDE4EA);
-  background-image: -o-linear-gradient(top, #DDE4EA, #DDE4EA);
-  background-image: -moz-linear-gradient(top, #DDE4EA, #DDE4EA);
-  background-image: linear-gradient(top, #DDE4EA, #DDE4EA);
-  background-repeat: repeat-x;
-  border-color: #A0B4CC #A0B4CC #A0B4CC;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#DDE4EA', endColorstr='#DDE4EA', GradientType=0);
-  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
-}
-
-.btn-facebook:hover,
-.btn-facebook:active,
-.btn-facebook.active,
-.btn-facebook.disabled,
-.btn-facebook[disabled] {
-  background-color: #DDE4EA;
-  *background-color: #DDE4EA;
-}
-
-.btn-facebook:active,
-.btn-facebook.active {
-  background-color: #DDE4EA \9;
-}
-
 
 button.btn,
 input[type="submit"].btn {
@@ -4212,7 +4174,7 @@ input[type="submit"].btn.btn-mini {
   width: 560px;
   margin: -250px 0 0 -280px;
   overflow: auto;
-  background-color: #000;
+  background-color: #ffffff;
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, 0.3);
   *border: 1px solid #999;
@@ -4254,6 +4216,7 @@ input[type="submit"].btn.btn-mini {
   padding: 15px;
   overflow-y: auto;
 }
+
 .modal-form {
   margin-bottom: 0;
 }

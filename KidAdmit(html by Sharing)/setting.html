@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>KidAdmit</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="css/newkidadmit.css" rel="stylesheet" type="text/css" />
+    <link href="css/formcss.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <!--header sign in begin-->
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="index.html">KidAdmit</a>
+                <ul class="nav">
+                    <li><a href="#">My Schools</a> </li>
+                    <li><a href="calendar.html">Calendar</a></li>
+                    <li><a href="#">Test Link</a></li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li class="active">
+                        <input type="text" id="nav-search" size="16"><button id="nav-search-btn">
+                        </button>
+                    </li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="img/profile.jpg" style="width: 40px; height: 40px; margin-bottom: -20px;
+                            margin-top: -20px;" />
+                        <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="setting.html">Settings</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Sign out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <!--body begin-->
+    <div id="cbody" class="container content">
+        <h2 class="inner-offset-y-1 font-weight-normal">
+            Settings
+        </h2>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="top-left-right-radius">
+                    <strong>Connections</strong>
+                </div>
+                <div class="inner-offset-1">
+                    <div class="row-fluid">
+                        <div class="span1">
+                            <img src="img/facebook.png" />
+                        </div>
+                        <div class="span8">
+                            <h4>
+                                Facebook</h4>
+                            <h4>
+                                Connected to Richard Combs</h4>
+                            <fieldset class="checkboxes">
+                                <label for="checkbox-01" class="label_check">
+                                    <input type="checkbox" value="1" id="checkbox-01" name="sample-checkbox-01" />Allow
+                                    us to post to your wall
+                                </label>
+                            </fieldset>
+                        </div>
+                        <div class="span3">
+                            <input type="button" class="kid-btn kid-btn-revoke-access" value=""></input>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span1">
+                            <img src="img/twitter.png" />
+                        </div>
+                        <div class="span8">
+                            <h4 class="inner-offset-y-1">
+                                Connect to Twitter</h4>
+                        </div>
+                        <div class="span3">
+                            <input type="button" class="kid-btn kid-btn-connect" value=""></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="top-left-right-radius">
+                    <strong>Notification Settings</strong>
+                </div>
+                <div class="inner-offset-1">
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <fieldset class="checkboxes">
+                                <label for="checkbox-02" class="label_check">
+                                    <input type="checkbox" checked="" value="1" id="checkbox-02" name="sample-checkbox-01" />Let
+                                    my friends see my likes
+                                </label>
+                                <label for="checkbox-03" class="label_check">
+                                    <input type="checkbox" value="1" id="checkbox-03" name="sample-checkbox-01" />Alert
+                                    me when a deadline is 1 week away
+                                </label>
+                                <label for="checkbox-04" class="label_check">
+                                    <input type="checkbox" value="1" id="checkbox-04" name="sample-checkbox-01" />Send
+                                    me a weekly digest on the schools I've saved
+                                </label>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--body end-->
+    <footer id="kidfooter">    
+      <div id="footer-floor">
+        <div class="container">
+            <div class="fh3 pull-left"><a href="#">About</a></div><div class="fh3 pull-left"><a href="#">Privacy</a></div>
+            <div class="fh3 pull-left"><a href="#">Terms of Use</a></div><div class="fh3 pull-left"><a href="#">Contect</a></div>    
+        </div><div class="container fcg lh30">Made with in <img src="img/heart.png" /> San Francisco | © 2012 KidAdmit, Inc. All rights reserved.</div>
+      </div>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+
+        var deh = document.documentElement.clientHeight;
+        if (cbody.offsetHeight < deh - 75 - 85) {
+            kidfooter.style.margin = (deh - cbody.offsetHeight - 75 - 85 + 36).toString() + "px 0px 0px 0px";
+        }
+
+        //checkbox bg
+        var d = document;
+        var safari = (navigator.userAgent.toLowerCase().indexOf('safari') != -1) ? true : false;
+
+        var gebtn = function (parEl, child) { return parEl.getElementsByTagName(child); };
+        onload = function () {
+            var body = gebtn(d, 'body')[0];
+            body.className = body.className && body.className != '' ? body.className + ' has-js' : 'has-js';
+            if (!d.getElementById || !d.createTextNode) {
+                return;
+            }
+            var ls = gebtn(d, 'label');
+            for (var i = 0; i < ls.length; i++) {
+                var l = ls[i];
+                if (l.className.indexOf('label_') == -1) {
+                    continue;
+                }
+                var inp = gebtn(l, 'input')[0];
+                if (l.className == 'label_check') {
+                    //l.className = (safari && inp.checked == true || inp.checked) ? 'label_check c_on' : 'label_check c_off';
+                    l.className = (safari && inp.checked == true || inp.checked) ? 'label_check c_off' : 'label_check c_on';
+                    l.onclick = check_it;
+                };
+                if (l.className == 'label_radio') {
+                    l.className = (safari && inp.checked == true || inp.checked) ? 'label_radio r_on' : 'label_radio r_off';
+                    l.onclick = turn_radio;
+                };
+            };
+        };
+        var check_it = function () {
+            var inp = gebtn(this, 'input')[0];
+            if (this.className == 'label_check c_off' || (!safari && inp.checked)) {
+                this.className = 'label_check c_on';
+                if (safari) {
+                    inp.click();
+                };
+            } else {
+                this.className = 'label_check c_off';
+                if (safari) {
+                    inp.click();
+                };
+            };
+        };
+        var turn_radio = function () {
+            var inp = gebtn(this, 'input')[0];
+            if (this.className == 'label_radio r_off' || inp.checked) {
+                var ls = gebtn(this.parentNode, 'label');
+                for (var i = 0; i < ls.length; i++) {
+                    var l = ls[i];
+                    if (l.className.indexOf('label_radio') == -1) {
+                        continue;
+                    };
+                    l.className = 'label_radio r_off';
+                };
+                this.className = 'label_radio r_on';
+                if (safari) {
+                    inp.click();
+                };
+            } else {
+                this.className = 'label_radio r_off';
+                if (safari) {
+                    inp.click();
+                };
+            };
+        }; 
+    </script>
+</body>
+</html>

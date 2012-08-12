@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>KidAdmit Calendar</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="css/newkidadmit.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <!--header sign in begin-->
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="index.html">KidAdmit</a>
+                <ul class="nav">
+                    <li><a href="#">My Schools</a> </li>
+                    <li class="active"><a href="calendar.html">Calendar</a></li>
+                    <li><a href="#">Test Link</a></li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li class="active">
+                        <input type="text" id="nav-search" size="16"><button id="nav-search-btn">
+                        </button>
+                    </li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="img/profile.jpg" style="width: 40px; height: 40px; margin-bottom: -20px;
+                            margin-top: -20px;" />
+                        <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="setting.html">Settings</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Sign out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <!--body begin-->
+    <div id="cbody" class="container content">
+        <h2 class="inner-offset-y-1 font-weight-normal">
+            Calendar
+        </h2>
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="top-left-right-radius">
+                    <strong>July 11,2012</strong><span class="pull-right font-color-gray">Wednesday</span>
+                </div>
+                <div class="inner-offset-1">
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <h4>
+                                Temple Emanu-EI Preschool</h4>
+                            <p>
+                                Application is due.</p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" class="kid-btn kid-btn-apply"></a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <h4>
+                                Alta Plaza Preschool</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" class="kid-btn kid-btn-apply"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="top-left-right-radius">
+                    <strong>July 22,2012</strong>
+                </div>
+                <div class="inner-offset-1">
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <h4>
+                                Temple Emanu-EI Preschool</h4>
+                            <p>
+                                Application is due.</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <h4>
+                                Alta Plaza Preschool</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" class="kid-btn kid-btn-apply"></a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <h4>
+                                Children's Day School</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <h4>
+                                Tiny Giants</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row-fluid">
+                        <div class="span10">
+                            <h4>
+                                C 5 Children's School</h4>
+                            <p>
+                                Schedule a visit.</p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="#" class="kid-btn kid-btn-apply"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span4 well">
+                <h4>
+                    Sync to Your Calendar</h4>
+                <div class="row-fluid">
+                    <span class="span4"><a href="#">
+                        <img src="img/iCal.png" class="inner-offset-x-1" /></a></span> <span class="span4"><a href="#">
+                            <img src="img/google.png"  class="inner-offset-x-1" /></a></span> <span class="span4"><a href="#">
+                                <img src="img/outlook.png"  class="inner-offset-x-1" /></a></span></div>
+            </div>
+        </div>
+        <div id="refresh">
+        </div>
+        ab
+    </div>
+    <!--body end-->
+    <footer id="kidfooter">    
+      <div id="footer-floor">
+        <div class="container">
+            <div class="row-fluid">
+               <a href="#" class="pull-left">About</a><a href="#" class="pull-left offset0">Privacy</a><a href="#" class="pull-left offset0">Terms of Use</a><a href="#" class="pull-left offset0">Contect</a><span class="kid-btn kid-btn-follow pull-right"></span><span class="kid-btn kid-btn-like pull-right"></span>
+            </div>
+            <div class="container fcg">Made with in <img src="img/heart.png" /> San Francisco | © 2012 KidAdmit, Inc. All rights reserved.</div>                
+        </div>
+      </div>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        var deh = document.documentElement.clientHeight;
+        if (cbody.offsetHeight < deh - 75 - 85) {
+            kidfooter.style.margin = (deh - cbody.offsetHeight - 75 - 85 + 36).toString() + "px 0px 0px 0px";            
+        }
+
+        var _scroll = false;
+        jQuery(window).scroll(function () {
+
+            //标签到浏览器顶部的高度
+            var label_top = jQuery("#refresh").offset().top;
+
+            //浏览器滚动的高度
+            var scroll_top = jQuery(window).scrollTop();
+
+            //当前浏览器窗口的可视化高度
+            var window_top = jQuery(window).height();
+
+            //文档高度
+            var body_top = jQuery(document.body).height();
+
+            //判断标签是否在当前可见窗口中
+            if (label_top - scroll_top <= window_top && !_scroll) {
+                _scroll = true;
+                var inner = document.getElementById("cbody").innerHTML;
+                var d = new Date();
+                document.getElementById("cbody").innerHTML = inner + "1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>" + d.toDateString();
+                jQuery(window).scrollTop(scroll_top + 150);
+                //alert("执行方法");
+                //jQuery("#refresh").click();
+                window.setTimeout(setScroll, 1000);
+            }
+        });
+        function setScroll() {
+            _scroll = false;
+        }
+
+        $("#nav-search-btn").hover(function () { document.getElementById("nav-search").className = 'nav-search-active'; });
+        $("#nav-search").hover(function () { document.getElementById("nav-search-btn").className = 'nav-search-btn-active'; });	            
+    </script>
+</body>
+</html>

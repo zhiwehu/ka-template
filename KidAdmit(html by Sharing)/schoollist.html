@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>KidAdmit</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="css/newkidadmit.css" rel="stylesheet" type="text/css" />
+    <link href="css/formcss.css" rel="stylesheet" type="text/css" />
+    <link href="css/nouislider.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    <!--
+        #map_canvas { height: 350px; width: 100% ;  }
+        .endless_container { display: block; margin-left: 300px;}
+        #marker-content .school-name {color:#258CCE; font-weight: bold;}
+        #marker-content .school-info {color:#000000;}
+    -->
+    </style>
+</head>
+<body>
+    <!--header sign out begin-->
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">KidAdmit</a>
+                <ul class="nav pull-right">
+                    <li><a data-toggle="modal" href="#signin-modal" class="btn btn-large signin">Sign in</a></li>
+                    <li id="signup" class="offset0"><a data-toggle="modal" href="#signup-modal" class="btn btn-large btn-signup">
+                        Sign up</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <div id="map_canvas">
+        maps</div>
+    <div class="container inner-offset-y-1">
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="top-left-right-radius">
+                    <strong>66 Schools Nearby</strong>
+                </div>
+                <div class="inner-offset-y-1">
+                    <div class="row-fluid">
+                        <div class="span2 pagination-centered">
+                            <img src="img/sbg.jpg" />
+                        </div>
+                        <div class="span7">
+                            <h3 class="search-list-color">
+                                Temple Emanu-EI Preschool</h3>
+                            <p>
+                                Pre-school</p>
+                            <p>
+                                Rolling Admission</p>
+                        </div>
+                        <div class="span3 pagination-centered">
+                            <input type="button" class="kid-btn kid-btn-search-list-save pull-right" value=""></input>
+                            <h3>
+                                <small>0.5 Miles away</small></h3>
+                        </div>
+                    </div>
+                    <hr class="hr0" />
+                    <div class="row-fluid">
+                        <div class="span2 pagination-centered">
+                            <img src="img/sbg.jpg" />
+                        </div>
+                        <div class="span7">
+                            <h3 class="search-list-color">
+                                Temple Emanu-EI Preschool</h3>
+                            <p>
+                                Pre-school</p>
+                            <p>
+                                Rolling Admission</p>
+                        </div>
+                        <div class="span3 pagination-centered">
+                            <input type="button" class="kid-btn kid-btn-search-list-saved pull-right" value=""></input>
+                            <h3>
+                                <small>0.5 Miles away</small></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span4 well" style="margin-top: -60px;">
+                <form method="post" action="{% url school_search %}" name="search_criteria">
+                <strong>Filter by:</strong>
+                <hr class="outer-offset-y-1" />
+                <fieldset>
+                    <p>
+                        <strong>What's your zip code?</strong></p>
+                    <p>
+                        <input class="span12" id="user_name" name="user[name]" size="30" placeholder="ex. 94123"
+                            type="text" value="">
+                    </p>
+                    <p>
+                        <strong>School Name</strong></p>
+                    <p>
+                        <input class="span12" id="Text1" name="user[name]" size="30" placeholder="ex. Tiny Giants"
+                            type="text" value="">
+                    </p>
+                    <p>
+                        <strong>School Type</strong></p>
+                    <p>
+                        <span class="span6">
+                            <label for="checkbox-02" class="label_check">
+                                <input type="checkbox" value="1" id="checkbox-02" name="sample-checkbox-01" />Pre-school
+                            </label>
+                        </span><span class="span6">
+                            <label for="checkbox-03" class="label_check">
+                                <input type="checkbox" checked="" value="1" id="checkbox-03" name="sample-checkbox-01" />Daycare
+                            </label>
+                        </span>
+                    </p>
+                    <p>
+                        <strong>Age Range</strong></p>
+                    <div id="sliderbar" class="sliderbar">
+                    </div>
+                    <span id="lowValue">1</span> <span id="highValue">5</span>
+                    <div class="divider">
+                    </div>
+                    <input type="button" class="kid-btn kid-btn-applyfilter outer-offset-y-1" value=""></input>
+                </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer id="kidfooter">    
+      <div id="footer-floor">
+        <div class="container">
+            <div class="row-fluid">
+               <a href="#" class="pull-left">About</a><a href="#" class="pull-left offset0">Privacy</a><a href="#" class="pull-left offset0">Terms of Use</a><a href="#" class="pull-left offset0">Contect</a><span class="kid-btn kid-btn-follow pull-right"></span><span class="kid-btn kid-btn-like pull-right"></span>
+            </div>
+            <div class="container fcg">Made with in <img src="img/heart.png" /> San Francisco | © 2012 KidAdmit, Inc. All rights reserved.</div>                
+        </div>
+      </div>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nouislider.js"></script>
+    <script>
+        /* Then call the plugin function on document ready. */
+        $(function () {
+
+            //$(".sliderbar").noUiSlider();
+            $("#sliderbar").noUiSlider("init", { bar: 'off', startMin: 1, startMax: 5, step: 4, point: 2, setTo: 1, scale: [1, 5], tracker:
+
+	            function () {
+	                //$("#sliderbar").setTo(3);
+	                $("#lowValue").text(
+			            $("#sliderbar").noUiSlider("getValue")[0]     // Without options, 'getValue' returns an array.
+		            );
+
+	                $("#highValue").text(
+			            $("#sliderbar").noUiSlider("getValue", { point: "upper" })
+		            );
+
+	            }
+
+            });
+
+        });
+
+        //checkbox bg
+        var d = document;
+        var safari = (navigator.userAgent.toLowerCase().indexOf('safari') != -1) ? true : false;
+
+        var gebtn = function (parEl, child) { return parEl.getElementsByTagName(child); };
+        onload = function () {
+            var body = gebtn(d, 'body')[0];
+            body.className = body.className && body.className != '' ? body.className + ' has-js' : 'has-js';
+            if (!d.getElementById || !d.createTextNode) {
+                return;
+            }
+            var ls = gebtn(d, 'label');
+            for (var i = 0; i < ls.length; i++) {
+                var l = ls[i];
+                if (l.className.indexOf('label_') == -1) {
+                    continue;
+                }
+                var inp = gebtn(l, 'input')[0];
+                if (l.className == 'label_check') {
+                    //l.className = (safari && inp.checked == true || inp.checked) ? 'label_check c_on' : 'label_check c_off';
+                    l.className = (safari && inp.checked == true || inp.checked) ? 'label_check c_off' : 'label_check c_on';
+                    l.onclick = check_it;
+                };
+                if (l.className == 'label_radio') {
+                    l.className = (safari && inp.checked == true || inp.checked) ? 'label_radio r_on' : 'label_radio r_off';
+                    l.onclick = turn_radio;
+                };
+            };
+        };
+        var check_it = function () {
+            var inp = gebtn(this, 'input')[0];
+            if (this.className == 'label_check c_off' || (!safari && inp.checked)) {
+                this.className = 'label_check c_on';
+                if (safari) {
+                    inp.click();
+                };
+            } else {
+                this.className = 'label_check c_off';
+                if (safari) {
+                    inp.click();
+                };
+            };
+        };
+        var turn_radio = function () {
+            var inp = gebtn(this, 'input')[0];
+            if (this.className == 'label_radio r_off' || inp.checked) {
+                var ls = gebtn(this.parentNode, 'label');
+                for (var i = 0; i < ls.length; i++) {
+                    var l = ls[i];
+                    if (l.className.indexOf('label_radio') == -1) {
+                        continue;
+                    };
+                    l.className = 'label_radio r_off';
+                };
+                this.className = 'label_radio r_on';
+                if (safari) {
+                    inp.click();
+                };
+            } else {
+                this.className = 'label_radio r_off';
+                if (safari) {
+                    inp.click();
+                };
+            };
+        }; 
+    </script>
+</body>
+</html>

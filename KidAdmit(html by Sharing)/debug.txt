@@ -1,0 +1,28 @@
+2012-07-29 09:50
+[OK]1.header 高度高一些
+[OK]2.header 不需要fixed
+[OK]3.name 框需要修改，与其他保持风格统一
+[OK]4.Sign up 与输入框的距离大一些
+[OK]5.sign in/register页面的KidAdmit按钮移上去不能变色，
+[OK]6.facebook按钮修改，按提供的PSD来修改
+[OK]7.footer 字号调整
+Finished at 2012-07-29 14:02
+
+2012-07-30 23:07
+需要完成的页面
+1.首页：index.html
+[OK 2012-07-29]2.首页登录modal页面
+[OK 2012-07-29]3.首页注册modal页面
+[OK 2012-07-29]4.登录页：signin.html
+[OK 2012-07-29]5.注册页：register.html
+[等待按钮，及右侧图标]6.日历页：calendar.html
+7.学校列表页：myschool.html
+8.学校详细页：schooldetail.html
+9.学校地图页：schoolmap.html
+10.个人页：profile.html
+11.个人编辑modal页
+12.设置页：setting.html
+
+可能还需要的页面：
+13.学校的编辑页面
+14.搜索的结果页面

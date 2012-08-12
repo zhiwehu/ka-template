@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>KidAdmit Sign up</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="css/newkidadmit.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container">
+        <div id="logo">
+            <a href="index.html">KidAdmit </a>
+        </div>
+        <div id="signin-modal" class="section">
+            <div class="modal-header">
+                <h3>
+                    Sign up for KidAdmit</h3>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Save the pre-schools that matter to you!</p>
+                <p>
+                    <label for="user_email">
+                        <strong>Name:</strong></label></p>
+                <p>
+                    <input class="span4" id="user_name" name="user[name]" size="30" placeholder="First and Last Name"
+                        type="text" value="">
+                </p>
+                <p>
+                    <label for="user_email">
+                        <strong>Email:</strong></label></p>
+                <p>
+                    <input class="span4" id="Email1" name="user[email]" size="30" placeholder="you@website.com"
+                        type="email" value="">
+                </p>
+                <p>
+                    <label for="user_password">
+                        <strong>Password:</strong>
+                    </label>
+                </p>
+                <p>
+                    <input class="span4" id="Password1" name="user[password]" size="30" placeholder="......"
+                        type="password">
+                </p>
+                <input class="btn-facebook btn-signin btn-toolbar" name="commit" type="submit" value="Sign up">
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn-facebook" name="commit" onclick="$('#facebook-connect-form').submit(); return false;"
+                    value="">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

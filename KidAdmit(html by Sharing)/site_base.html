@@ -1,0 +1,198 @@
+﻿{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{% block head_title %}{% trans "Home" %}{% endblock %} | {% trans "KidAdmit" %}</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/newkidadmit.css" rel="stylesheet" type="text/css"/>
+    {% block extra_css %}
+    {% endblock %}
+</head>
+<body>
+
+{% include "_head.html" %}
+
+{% block content %}
+{% endblock %}
+
+<div class="modal hide fade" id="login-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>{% trans "Sign In" %}</h3>
+    </div>
+
+        <form id="login-form" class="modal-form" method="post" action="{% url auth_ajax_login %}">
+    <div class="modal-body">
+            {% csrf_token %}
+            <div id="loginMessage"></div>
+            <fieldset><p>
+                <label for="id_email_signin"><strong>Email:</strong></label> </p>
+                <p>
+                <input type="text" id="id_email_signin" name="email" class="required email span4"> </p>
+                <p>
+                <label for="id_password_signin"><strong>Password:</strong></label> </p>
+                <p>
+                <input type="password" id="id_password_signin" name="password" class="span4 required"> </p>
+                <input type="hidden" name="next" value=""/>
+            </fieldset>
+            <input id="login-button" class="btn-facebook btn-signin btn-toolbar" type="submit" value="Sign in"/>
+    </div>
+    <div class="modal-footer">
+            <p>
+                <input type="button" class="btn-facebook" name="commit" onclick="$('#facebook-connect-form').submit(); return false;"
+                    value="{% trans "Log in with Facebook" %}"></p>
+            <p>
+                <a id="forgot-password"
+                    href="#" class="pull-left">{% trans "Forgot password?" %}</a><a id="signup-on-login"
+                        href="#" class="pull-right">{% trans "Sign up to KidAdmit" %}</a></p>
+        </div>
+        </form>
+</div>
+<!--forgot password begin-->
+    <form class="form-horizontal" id="Form2" action="#" method="post">
+    <div id="forgotpassword" class="modal hide fade">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3 class="small">
+                Forgot Your Password?</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Enter your email and we'll send you instructions on how to reset your password.</p>
+            <p>
+                <label for="user_email">
+                    <strong>Email:</strong></label>
+            </p>
+            <p>
+                <input class="span4" id="Email2" name="user[email]" size="30" type="email" placeholder="you@website.com"
+                    value=""></p>
+            <p>
+                <input class="btn-facebook btn-signin btn-toolbar" name="commit" type="submit" value="Sign in">
+            </p>
+        </div>
+    </div>
+    </form>
+    <!--forgot password end-->
+<div class="modal hide fade" id="signup-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>{% trans "Sign up for KidAdmit" %}</h3>
+    </div>
+
+    <form id="signup-form" class="modal-form" method="post" action="{% url registration_register %}">
+        <div class="modal-body">
+                {% csrf_token %}
+                <div id="signMessage"></div>
+                <fieldset>
+                <p>
+                Save the pre-schools that matter to you!</p>
+            <p>
+                    <label for="id_username_signup"><strong>Name:</strong></label></p>
+            <p>
+                    <input type="text" id="id_username_signup" name="username" class="span4 required"/></p>
+            <p>
+                    <label for="id_username_signup"><strong>Email:</strong></label></p>
+            <p>
+                    <input type="text" id="id_email_signup" name="email" class="span4 required email"/></p>
+            <p>
+                    <label for="id_password_signup"><strong>Password:</strong></label></p>
+            <p>
+                    <input type="password" id="id_password_signup" name="password1" class="span4 required"/></p>
+            
+                    <input type="hidden" id="id_password_signup_2" name="password2" value=""/>
+                </fieldset>
+                <input id="signup-button" class="btn btn-large btn-success" type="submit" value="Sign Up"/>
+        </div>
+
+    <div class="modal-footer"> <p>
+    <input type="button" class="btn-facebook" name="commit" onclick="$('#facebook-connect-form').submit(); return false;"
+                value=""></p> <p>
+        {% trans "Already have an account?" %}
+        <a id="login-on-signup" href="#">
+            <span>{% trans "Sign In" %}</span>
+        </a></p>
+    </div>
+
+    </form>
+</div>
+
+{% include "_footer.html" %}
+<script src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+{% block extra_js %}{% endblock %}
+<script charset="utf-8" type="text/javascript">
+    $(document).ready(function () {
+        $("#id_password_signup").change(function () {
+            $("#id_password_signup_2").val($("#id_password_signup").val());
+        });
+
+        // Use the jquery validate to check the login form before submit
+        $("#login-form").validate();
+
+        $("#login-form").submit(function () {
+            var form = $("#login-form");
+            $("#loginMessage").empty();
+            if (form.valid()) {
+                $.ajax({
+                    url:"{% url auth_ajax_login %}",
+                    type:"POST",
+                    data:$("#login-form").serialize(),
+                    success:function (url) {
+                        $("#login-modal").modal({show:false});
+                        window.location = url;
+                    },
+                    error:function (jqXHR) {
+                        if (jqXHR.status == 403) {
+                            $("#loginMessage").text(jqXHR.responseText);
+                        } else {
+                            $("#loginMessage").text("Error Contacting Server");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+
+        // Use the jquery validate to check the signup form before submit
+        $("#signup-form").validate();
+
+        $("#signup-form").submit(function () {
+            var form = $("#signup-form");
+            if (form.valid()) {
+                $("#signMessage").empty();
+                $.ajax({
+                    url:"{% url registration_register %}",
+                    type:"POST",
+                    data:$("#signup-form").serialize(),
+                    success:function (data) {
+                        if (data.url != null) {
+                            window.location = data.url;
+                        } else {
+                            $.each(data, function (key, value) {
+                                $("#signMessage").append("<p>" + key + ": " + value + "</p>");
+                            });
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+
+        $("#signup-on-login").click(function(){
+            $("#login-modal").modal("hide");
+            $("#signup-modal").modal("show");
+        });
+
+        $("#login-on-signup").click(function(){
+            $("#signup-modal").modal("hide");
+            $("#login-modal").modal("show");
+        });
+
+    });
+</script>
+</body>
+</html>

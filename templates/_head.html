@@ -15,7 +15,8 @@
                 {% if user.is_authenticated %}
                     <form class="navbar-form pull-left" action="{% url quick_school_search %}" method="post">
                         {% csrf_token %}
-                        <input id="navbar-search" type="text" class="span3" name="address" placeholder="{% trans "Search..." %}">
+                        <input id="navbar-search" type="text" class="span3" name="address" placeholder="{% trans "Search..." %}"><span><input
+                            type="submit" value="" class="searchbtn" /></span>
                     </form>
 
                     <li class="dropdown">
